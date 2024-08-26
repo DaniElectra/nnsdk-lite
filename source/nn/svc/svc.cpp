@@ -24,6 +24,10 @@ __attribute__((naked)) nn::Result ArbitrateAddress(Handle arbiter, u32 addr, nn:
     "ldmia sp!, {r4, r5}"
     "bx lr");
 
+__attribute__((naked)) nn::Result CloseHandle(Handle handle) asm(
+    "svc 0x23"
+    "bx lr");
+
 __attribute__((naked)) nn::Result ConnectToPort(Handle* out, char* portName) asm(
     "str r0, [sp, #-0x4]!"
     "svc 0x2D"

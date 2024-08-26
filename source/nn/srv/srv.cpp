@@ -4,7 +4,10 @@
 #include "nn/Result.h"
 #include "nn/os/sync.h"
 #include "nn/os/thread.h"
+#include "nn/srv/errors.h"
 #include "nn/svc/svc.h"
+
+#include <cstring>
 
 namespace nn {
 
@@ -54,6 +57,31 @@ nn::Result Initialize() {
     }
 
     s_InitializeLock.Leave();
+    return res;
+}
+
+nn::Result GetServiceHandle(nn::Handle *out, const char *service, s32 serviceLen, u32 flags) {
+    if (s_InitializeCount < 1) {
+        // 0xD8A067F8
+        return {nn::Result::Level_Permanent, nn::Result::Summary_InvalidState, nn::Result::ModuleType_SRV, nn::Result::Description_NotInitialized};
+    }
+
+    if (serviceLen > 8) {
+        // 0xD9006405
+        return {nn::Result::Level_Permanent, nn::Result::Summary_WrongArgument, nn::Result::ModuleType_SRV, nn::srv::Description_InvalidStringLength};
+    }
+
+    return detail::Service::GetServiceHandle(out, service, serviceLen, flags);
+}
+
+nn::Result GetServiceHandle(nn::os::ipc::Session *outSession, const char *service) {
+    nn::Handle session{};
+
+    nn::Result res = GetServiceHandle(&session, service, std::strlen(service), 0);
+    if (res) {
+        outSession->session = session;
+    }
+
     return res;
 }
 
