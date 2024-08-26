@@ -1,0 +1,17 @@
+---
+BasedOnStyle: Chromium
+AccessModifierOffset: -4
+AlignArrayOfStructures: Right
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortEnumsOnASingleLine: false
+BinPackArguments: false
+ColumnLimit: 150
+IndentExternBlock: NoIndent
+IndentWidth: 4
+InsertNewlineAtEOF: true
+LineEnding: LF
+
