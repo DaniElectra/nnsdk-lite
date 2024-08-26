@@ -16,6 +16,7 @@ class Interface {
 public:
     static nn::os::ipc::Session s_Session;
 
+    /// Leaves the exclusive state
     static nn::Result LeaveExclusiveState();
 };
 
