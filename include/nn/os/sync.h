@@ -30,6 +30,9 @@ class CriticalSection {
     u32 counter;
 
 public:
+    // UNOFFICIAL: Guess from static initializers
+    CriticalSection() { Initialize(); }
+
     void Initialize();
     void Enter();
     void Leave();

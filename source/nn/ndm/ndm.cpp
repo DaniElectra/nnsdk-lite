@@ -1,6 +1,6 @@
 #include "nn/ndm/ndm.h"
-#include "nn/ndm/CTR/detail/interface.h"
 #include "nn/Result.h"
+#include "nn/ndm/CTR/detail/interface.h"
 #include "nn/os/sync.h"
 #include "nn/srv/srv.h"
 #include "nn/svc/svc.h"
@@ -8,17 +8,20 @@
 #include <cstring>
 
 namespace {
-    static nn::os::CriticalSection s_cs;
+
+static nn::os::CriticalSection s_cs = nn::os::CriticalSection();
+
 }
 
 namespace nn {
 
 namespace ndm {
 
-// UNOFFICIAL: Guessing from nn::srv
 namespace {
-    static u32 s_InitializedCount;
-    static constexpr auto PORT_NAME_USER = "ndm:u";
+
+static u32 s_InitializedCount;
+static constexpr auto PORT_NAME_USER = "ndm:u";
+
 }  // namespace
 
 nn::Result Initialize() {
@@ -56,7 +59,7 @@ nn::Result Finalize() {
             return res;
         }
 
-        CTR::detail::Interface::s_Session.session = {}; // Clear handle
+        CTR::detail::Interface::s_Session.session = {};  // Clear handle
     }
 
     s_InitializedCount--;

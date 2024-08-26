@@ -1,9 +1,9 @@
 #include "nn/srv/srv.h"
-#include "nn/fnd/TimeSpan.h"
-#include "nn/srv/detail/service.h"
 #include "nn/Result.h"
+#include "nn/fnd/TimeSpan.h"
 #include "nn/os/sync.h"
 #include "nn/os/thread.h"
+#include "nn/srv/detail/service.h"
 #include "nn/srv/errors.h"
 #include "nn/svc/svc.h"
 
@@ -14,13 +14,15 @@ namespace nn {
 namespace srv {
 
 namespace {
-    // UNOFFICIAL: The real name for this is unknown
-    static bool InitializedLock;
 
-    static nn::os::CriticalSection s_InitializeLock;
-    static u32 s_InitializeCount;
-    static constexpr auto PORT_NAME = "srv:";
-}
+// UNOFFICIAL: The real name for this is unknown
+static bool InitializedLock;
+
+static nn::os::CriticalSection s_InitializeLock;
+static u32 s_InitializeCount;
+static constexpr auto PORT_NAME = "srv:";
+
+}  // namespace
 
 nn::Result Initialize() {
     nn::Result res;
@@ -31,19 +33,19 @@ nn::Result Initialize() {
         InitializedLock = true;
     }
 
-    s_InitializeLock.Enter(); // TODO - This uses a nn::os::CriticalSection::ScopedLock for managing the lock
+    s_InitializeLock.Enter();  // TODO - This uses a nn::os::CriticalSection::ScopedLock for managing the lock
 
     if (s_InitializeCount > 0) {
         s_InitializeCount++;
         s_InitializeLock.Leave();
-        return {nn::Result::Level_Info, nn::Result::Summary_Nop, nn::Result::ModuleType_SRV, nn::Result::Description_AlreadyInitialized}; // 0x82067F9
+        return {
+            nn::Result::Level_Info, nn::Result::Summary_Nop, nn::Result::ModuleType_SRV, nn::Result::Description_AlreadyInitialized};  // 0x82067F9
     }
 
     while (true) {
         res = nn::svc::ConnectToPort(&detail::Service::s_Session.session, PORT_NAME);
 
-        if (res.GetLevel() != nn::Result::Level_Permanent ||
-            res.GetSummary() != nn::Result::Summary_NotFound ||
+        if (res.GetLevel() != nn::Result::Level_Permanent || res.GetSummary() != nn::Result::Summary_NotFound ||
             res.GetDescription() != nn::Result::Description_NotFound)
             break;
 
@@ -60,7 +62,7 @@ nn::Result Initialize() {
     return res;
 }
 
-nn::Result GetServiceHandle(nn::Handle *out, const char *service, s32 serviceLen, u32 flags) {
+nn::Result GetServiceHandle(nn::Handle* out, const char* service, s32 serviceLen, u32 flags) {
     if (s_InitializeCount < 1) {
         // 0xD8A067F8
         return {nn::Result::Level_Permanent, nn::Result::Summary_InvalidState, nn::Result::ModuleType_SRV, nn::Result::Description_NotInitialized};
@@ -74,7 +76,7 @@ nn::Result GetServiceHandle(nn::Handle *out, const char *service, s32 serviceLen
     return detail::Service::GetServiceHandle(out, service, serviceLen, flags);
 }
 
-nn::Result GetServiceHandle(nn::os::ipc::Session *outSession, const char *service) {
+nn::Result GetServiceHandle(nn::os::ipc::Session* outSession, const char* service) {
     nn::Handle session{};
 
     nn::Result res = GetServiceHandle(&session, service, std::strlen(service), 0);
