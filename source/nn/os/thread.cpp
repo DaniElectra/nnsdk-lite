@@ -7,7 +7,7 @@ namespace os {
 
 void* getThreadLocalStorage() {
     void* ret;
-    __asm__("mrc p15, 0, %[data], c13, c0, 3" : [data] "=r"(ret));
+    asm("mrc p15, 0, %[data], c13, c0, 3" : [data] "=r"(ret));
     return ret;
 }
 
