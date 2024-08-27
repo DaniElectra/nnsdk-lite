@@ -22,7 +22,7 @@ public:
     nn::Result InitializeSession(u64 titleId);
 };
 CHECK_SIZE(User, 0x4);
-CHECK_OFFSET(User, session, 0x0);
+CHECK_OFFSET(User, 0x0, session);
 
 }  // namespace detail
 

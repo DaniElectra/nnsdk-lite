@@ -15,7 +15,7 @@ public:
     nn::Handle session;
 };
 CHECK_SIZE(Privileged, 0x4);
-CHECK_OFFSET(Privileged, session, 0x0);
+CHECK_OFFSET(Privileged, 0x0, session);
 
 }  // namespace detail
 

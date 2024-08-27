@@ -15,7 +15,7 @@ public:
     Handle session;
 };
 CHECK_SIZE(Session, 4);
-CHECK_OFFSET(Session, session, 0x0);
+CHECK_OFFSET(Session, 0x0, session);
 
 // UNOFFICIAL: Replicating from libctru
 

@@ -1,10 +1,19 @@
 #pragma once
 
+#ifdef NNSDK_CHECKS
+
 #include <cstddef>
 
 // Helper macros for checking sizes and offsets
 #define CHECK_SIZE(type, size) static_assert(sizeof(type) == size)
-#define CHECK_OFFSET(type, member, offset) static_assert(offsetof(type, member) == offset)
+#define CHECK_OFFSET(type, offset, member) static_assert(offsetof(type, member) == offset)
+
+#else
+
+#define CHECK_SIZE(type, size)
+#define CHECK_OFFSET(type, offset, member)
+
+#endif
 
 // Helper macros for inserting unknown/padding bytes to a struct. Adapted from https://github.com/devkitPro/wut/blob/master/include/wut_structsize.h
 
