@@ -2,6 +2,7 @@
 
 #include "nn/Handle.h"
 #include "nn/Result.h"
+#include "nn/dbg/BreakReason.h"
 #include "nn/os/types.h"
 #include "nn/types.h"
 
@@ -49,6 +50,12 @@ nn::Result ConnectToPort(Handle* out, const char* portName);
  * @param handle Handle of the session
  */
 nn::Result SendSyncRequest(Handle handle);
+
+/**
+ * @brief Breaks execution of the program
+ * @param reason Reason for breaking execution
+ */
+void Break(nn::dbg::BreakReason reason);
 
 }  // namespace svc
 
