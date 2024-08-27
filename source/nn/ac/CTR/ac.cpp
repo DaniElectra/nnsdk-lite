@@ -21,6 +21,10 @@ static constexpr auto PORT_NAME_USER = "ac:u";
 
 }  // namespace
 
+/**
+ * @brief Checks if the internal session ("ac:i") is initialized
+ * @return Whether the internal session is initialized
+ */
 bool IsInitializedInternal() {
     return detail::Ac::s_SessionInternal.session.m_Handle != 0;
 }
