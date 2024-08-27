@@ -26,3 +26,6 @@
 // generates unique variable names using __COUNTER__
 #define INSERT_UNKNOWN_BYTES(size) char PP_CAT(__unk, __COUNTER__)[size]
 #define INSERT_PADDING_BYTES(size) char PP_CAT(__pad, __COUNTER__)[size]
+
+#define NNSDK_PACKED __attribute__((packed))
+#define NNSDK_NAKED __attribute__((naked))

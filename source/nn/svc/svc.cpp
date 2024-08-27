@@ -5,12 +5,12 @@ namespace nn {
 
 namespace svc {
 
-__attribute__((naked)) nn::Result SleepThread(s64 nanoseconds) {
+NNSDK_NAKED nn::Result SleepThread(s64 nanoseconds) {
     asm("svc 0xA \n"
         "bx lr");
 }
 
-__attribute__((naked)) nn::Result CreateAddressArbiter(Handle* arbiter) {
+NNSDK_NAKED nn::Result CreateAddressArbiter(Handle* arbiter) {
     asm("str r0, [sp, #-0x4]! \n"
         "svc 0x21 \n"
         "ldr r2, [sp, #0x0] \n"
@@ -19,7 +19,7 @@ __attribute__((naked)) nn::Result CreateAddressArbiter(Handle* arbiter) {
         "bx lr");
 }
 
-__attribute__((naked)) nn::Result ArbitrateAddress(Handle arbiter, u32 addr, nn::os::ArbitrationType arbitrationType, s32 value, s64 nanoseconds) {
+NNSDK_NAKED nn::Result ArbitrateAddress(Handle arbiter, u32 addr, nn::os::ArbitrationType arbitrationType, s32 value, s64 nanoseconds) {
     asm("stmdb sp!, {r4, r5} \n"
         "ldr r4, [sp, #0x8] \n"
         "ldr r5, [sp, #0xC] \n"
@@ -28,12 +28,12 @@ __attribute__((naked)) nn::Result ArbitrateAddress(Handle arbiter, u32 addr, nn:
         "bx lr");
 }
 
-__attribute__((naked)) nn::Result CloseHandle(Handle handle) {
+NNSDK_NAKED nn::Result CloseHandle(Handle handle) {
     asm("svc 0x23 \n"
         "bx lr");
 }
 
-__attribute__((naked)) nn::Result ConnectToPort(Handle* out, char* portName) {
+NNSDK_NAKED nn::Result ConnectToPort(Handle* out, char* portName) {
     asm("str r0, [sp, #-0x4]! \n"
         "svc 0x2D \n"
         "ldr r2, [sp, #0x0] \n"
@@ -42,12 +42,12 @@ __attribute__((naked)) nn::Result ConnectToPort(Handle* out, char* portName) {
         "bx lr");
 }
 
-__attribute__((naked)) nn::Result SendSyncRequest(Handle handle) {
+NNSDK_NAKED nn::Result SendSyncRequest(Handle handle) {
     asm("svc 0x32 \n"
         "bx lr");
 }
 
-__attribute__((naked)) void Break(nn::dbg::BreakReason reason) {
+NNSDK_NAKED void Break(nn::dbg::BreakReason reason) {
     asm("svc 0x3C \n"
         "bx lr");
 }
