@@ -24,6 +24,25 @@ nn::Result User::InitializeSession(u64 titleId) {
     return res;
 }
 
+nn::Result User::GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *outEntries, u16 startIndex, u32 startNsDataId, u16 *lastIndex) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x10, 4, 2, 0);  // 0x100102
+    cmdbuf[1] = filter;
+    cmdbuf[2] = maxEntries;
+    cmdbuf[3] = startIndex;
+    cmdbuf[4] = startNsDataId;
+    nn::os::ipc::WriteMappedBufferWrite(cmdbuf, 5, list, maxEntries * sizeof(u32));
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *outEntries = cmdbuf[2];
+        *lastIndex = cmdbuf[3];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
 nn::Result User::DeleteNsData(u32 nsDataId) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x26, 1, 0, 0);  // 0x260040

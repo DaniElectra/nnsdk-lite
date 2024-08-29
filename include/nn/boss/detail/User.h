@@ -23,6 +23,18 @@ public:
     nn::Result InitializeSession(u64 titleId);
 
     /**
+     * @brief Gets a list of NS Data IDs
+     * @param filter Filter by content datatypes, see https://www.3dbrew.org/wiki/BOSSU:GetNsDataIdList#Filter
+     * @param list Output array of NS Data IDs
+     * @param maxEntries Number of entries that the list can hold
+     * @param outEntries Output number of entries written to the list
+     * @param startIndex Start index for NS Data IDs
+     * @param startNsDataId Start NS Data ID to look up
+     * @param lastIndex Output last index written to the list
+     */
+    nn::Result GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *outEntries, u16 startIndex, u32 startNsDataId, u16 *lastIndex);
+
+    /**
      * @brief Deletes the content for the specified NS Data ID
      * @param nsDataId NS Data ID
      */
