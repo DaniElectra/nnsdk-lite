@@ -18,6 +18,7 @@ namespace detail {
 
 /// Manages all IPC sessions for BOSS
 class IpcManager {
+public:
     // u32 *vtable; // The vtable is implicit
     bool userInitialized{};
     bool privilegedInitialized{};
@@ -31,7 +32,7 @@ class IpcManager {
     bossM bossMInstance{};
     u64 titleId{};
 
-public:
+    // vtable +0x0
     virtual ~IpcManager();
 
     /// Initializes boss:U
@@ -41,11 +42,16 @@ public:
     nn::Result FinalizeUserIpc();
 };
 CHECK_SIZE(IpcManager, 0x28);
-
-// UNOFFICIAL: Guess from context
-namespace {
-static IpcManager s_IpcManager;
-}
+CHECK_OFFSET(IpcManager, 0x04, userInitialized);
+CHECK_OFFSET(IpcManager, 0x05, privilegedInitialized);
+CHECK_OFFSET(IpcManager, 0x06, bossMInitialized);
+CHECK_OFFSET(IpcManager, 0x08, userSession);
+CHECK_OFFSET(IpcManager, 0x0C, privilegedSession);
+CHECK_OFFSET(IpcManager, 0x10, bossMSession);
+CHECK_OFFSET(IpcManager, 0x14, userInstance);
+CHECK_OFFSET(IpcManager, 0x18, privilegedInstance);
+CHECK_OFFSET(IpcManager, 0x1C, bossMInstance);
+CHECK_OFFSET(IpcManager, 0x20, titleId);
 
 }  // namespace detail
 

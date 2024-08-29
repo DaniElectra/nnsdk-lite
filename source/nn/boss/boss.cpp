@@ -1,6 +1,6 @@
 #include "nn/boss/boss.h"
 #include "nn/Result.h"
-#include "nn/boss/detail/IpcManager.h"
+#include "nn/boss/detail/detail.h"
 #include "nn/ndm/ndm.h"
 
 namespace nn {
@@ -13,20 +13,6 @@ namespace {
 static bool s_IsInitialized;
 
 }
-
-namespace detail {
-
-/// Initializes boss:U
-nn::Result InitializeUserIpc() {
-    return s_IpcManager.InitializeUserIpc();
-}
-
-/// Finalizes boss:U
-nn::Result FinalizeUserIpc() {
-    return s_IpcManager.InitializeUserIpc();
-}
-
-}  // namespace detail
 
 nn::Result Initialize() {
     if (s_IsInitialized) {
