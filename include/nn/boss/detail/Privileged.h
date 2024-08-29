@@ -4,6 +4,7 @@
 #include "nn/Handle.h"
 #include "nn/Result.h"
 #include "nn/boss/NsDataHeaderInfo.h"
+#include "nn/boss/TaskResultCode.h"
 
 namespace nn {
 
@@ -67,6 +68,13 @@ public:
      * @param flag Output flag
      */
     nn::Result GetNsDataNewFlag(u32 nsDataId, bool *flag);
+
+    /**
+     * @brief Gets the error code for the given \link TaskResultCode \endlink
+     * @param errorCode Output error code
+     * @param result Task result code
+     */
+    nn::Result GetErrorCode(u32 *errorCode, TaskResultCode result);
 
     /**
      * @brief Deletes the content for the specified NS Data ID with privileged permissions

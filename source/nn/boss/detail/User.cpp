@@ -1,5 +1,6 @@
 #include "nn/boss/detail/User.h"
 #include "nn/Result.h"
+#include "nn/boss/TaskResultCode.h"
 #include "nn/os/ipc.h"
 #include "nn/svc/svc.h"
 
@@ -113,6 +114,20 @@ nn::Result User::GetNsDataNewFlag(u32 nsDataId, bool *flag) {
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *flag = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result User::GetErrorCode(u32 *errorCode, TaskResultCode result) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x2E, 1, 0, 0);  // 0x2E0040
+    cmdbuf[1] = static_cast<u32>(result);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *errorCode = cmdbuf[2];
         res = RAW_RESULT(cmdbuf[1]);
     }
 

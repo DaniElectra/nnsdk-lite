@@ -104,6 +104,20 @@ nn::Result Privileged::GetNsDataNewFlag(u32 nsDataId, bool *flag) {
     return res;
 }
 
+nn::Result Privileged::GetErrorCode(u32 *errorCode, TaskResultCode result) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x2E, 1, 0, 0);  // 0x2E0040
+    cmdbuf[1] = static_cast<u32>(result);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *errorCode = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
 nn::Result Privileged::DeleteNsDataPrivileged(u64 titleId, u32 nsDataId) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x415, 3, 0, 0);  // 0x41500C0
