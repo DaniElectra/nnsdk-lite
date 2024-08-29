@@ -15,4 +15,5 @@ IndentWidth: 4
 InsertNewlineAtEOF: true
 LineEnding: LF
 PointerAlignment: Right
+SpacesBeforeTrailingComments: 1
 
