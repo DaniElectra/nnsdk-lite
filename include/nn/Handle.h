@@ -17,4 +17,4 @@ CHECK_SIZE(Handle, 4);
 // Helper macro for transforming a raw value into an nn::Handle
 #define RAW_HANDLE(res) (*reinterpret_cast<nn::Handle *>(&res))
 
-}  // namespace nn
+} // namespace nn

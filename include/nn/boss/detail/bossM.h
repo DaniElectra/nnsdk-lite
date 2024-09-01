@@ -19,8 +19,8 @@ public:
 CHECK_SIZE(bossM, 0x4);
 CHECK_OFFSET(bossM, 0x0, session);
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

@@ -57,6 +57,6 @@ CHECK_OFFSET(NsDataIdList, 0x10, count);
  */
 nn::Result GetNsDataIdList(u32 filter, NsDataIdList *list);
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

@@ -189,4 +189,4 @@ CHECK_SIZE(Result, 4);
 
 const Result RESULT_SUCCESS = {Result::Level_Success, Result::Summary_Success, Result::ModuleType_COMMON, Result::Description_Success};
 
-}  // namespace nn
+} // namespace nn

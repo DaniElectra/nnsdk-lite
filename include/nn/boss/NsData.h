@@ -13,7 +13,7 @@ namespace boss {
 
 /// Represents a container that holds data
 class NNSDK_PACKED NsData {
-    u32 *vtable;  // The vtable is empty
+    u32 *vtable; // The vtable is empty
 public:
     INSERT_UNKNOWN_BYTES(4);
     bool privilegedAccess;
@@ -29,7 +29,7 @@ public:
         nsDataId = 0;
         payloadSize = 0;
         unknownOut = 0;
-        titleId = 0xA010;  // TODO - What is this?
+        titleId = 0xA010; // TODO - What is this?
         offset = 0;
     }
 
@@ -86,6 +86,6 @@ CHECK_OFFSET(NsData, 0x14, unknownOut);
 CHECK_OFFSET(NsData, 0x18, titleId);
 CHECK_OFFSET(NsData, 0x20, offset);
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

@@ -124,8 +124,8 @@ public:
 CHECK_SIZE(Privileged, 0x4);
 CHECK_OFFSET(Privileged, 0x0, session);
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

@@ -104,8 +104,8 @@ void WriteProcessIDTranslate(u32 *cmdbuf, u32 offset);
  */
 void WriteHandleTranslate(u32 *cmdbuf, u32 offset, u32 numHandles);
 
-}  // namespace ipc
+} // namespace ipc
 
-}  // namespace os
+} // namespace os
 
-}  // namespace nn
+} // namespace nn

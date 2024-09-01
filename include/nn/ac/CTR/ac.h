@@ -20,8 +20,8 @@ nn::Result Finalize();
  */
 bool IsConnected();
 
-}  // namespace CTR
+} // namespace CTR
 
-}  // namespace ac
+} // namespace ac
 
-}  // namespace nn
+} // namespace nn

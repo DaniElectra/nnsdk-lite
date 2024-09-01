@@ -12,6 +12,6 @@ enum class ArbitrationType {
     DecrementAndWaitIfLessThanTimeout
 };
 
-}  // namespace os
+} // namespace os
 
-}  // namespace nn
+} // namespace nn

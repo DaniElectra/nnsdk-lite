@@ -10,7 +10,7 @@ NNSDK_NAKED nn::Result SleepThread(s64 nanoseconds) {
         "bx lr");
 }
 
-NNSDK_NAKED nn::Result CreateAddressArbiter(Handle* arbiter) {
+NNSDK_NAKED nn::Result CreateAddressArbiter(Handle *arbiter) {
     asm("str r0, [sp, #-0x4]! \n"
         "svc 0x21 \n"
         "ldr r2, [sp, #0x0] \n"
@@ -33,7 +33,7 @@ NNSDK_NAKED nn::Result CloseHandle(Handle handle) {
         "bx lr");
 }
 
-NNSDK_NAKED nn::Result ConnectToPort(Handle* out, char* portName) {
+NNSDK_NAKED nn::Result ConnectToPort(Handle *out, char *portName) {
     asm("str r0, [sp, #-0x4]! \n"
         "svc 0x2D \n"
         "ldr r2, [sp, #0x0] \n"
@@ -52,6 +52,6 @@ NNSDK_NAKED void Break(nn::dbg::BreakReason reason) {
         "bx lr");
 }
 
-}  // namespace svc
+} // namespace svc
 
-}  // namespace nn
+} // namespace nn

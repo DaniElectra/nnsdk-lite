@@ -40,8 +40,8 @@ void WriteHandleTranslate(u32 *cmdbuf, u32 offset, u32 numHandles) {
     cmdbuf[offset] = (numHandles - 1) << 26;
 }
 
-}  // namespace ipc
+} // namespace ipc
 
-}  // namespace os
+} // namespace os
 
-}  // namespace nn
+} // namespace nn

@@ -85,8 +85,8 @@ public:
 CHECK_SIZE(User, 0x4);
 CHECK_OFFSET(User, 0x0, session);
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

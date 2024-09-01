@@ -35,7 +35,7 @@ static inline void __clrex() {
  * @param addr Address to perform the operation on.
  * @return The resulting value.
  */
-static inline s32 __ldrex(s32* addr) {
+static inline s32 __ldrex(s32 *addr) {
     s32 val;
     __asm__ __volatile__("ldrex %[val], %[addr]" : [val] "=r"(val) : [addr] "Q"(*addr));
     return val;
@@ -47,7 +47,7 @@ static inline s32 __ldrex(s32* addr) {
  * @param val Value to store.
  * @return Whether the operation was successful.
  */
-static inline bool __strex(s32* addr, s32 val) {
+static inline bool __strex(s32 *addr, s32 val) {
     bool res;
     __asm__ __volatile__("strex %[res], %[val], %[addr]" : [res] "=&r"(res) : [val] "r"(val), [addr] "Q"(*addr));
     return res;
@@ -75,14 +75,14 @@ void SimpleLock::Lock() {
         // Read the current lock state
         val = __ldrex(&lock);
         if (val == 0)
-            val = 1;  // 0 is an invalid state - treat it as 1 (unlocked)
+            val = 1; // 0 is an invalid state - treat it as 1 (unlocked)
         bAlreadyLocked = val < 0;
 
         // Calculate the desired next state of the lock
         if (!bAlreadyLocked)
-            val = -val;  // transition into locked state
+            val = -val; // transition into locked state
         else
-            --val;  // increment the number of waiting threads (which has the sign reversed during locked state)
+            --val; // increment the number of waiting threads (which has the sign reversed during locked state)
     } while (__strex(&lock, val));
 
     // While the lock is held by a different thread:
@@ -98,7 +98,7 @@ void SimpleLock::Lock() {
 
             // Calculate the desired next state of the lock
             if (!bAlreadyLocked)
-                val = -(val - 1);  // decrement the number of waiting threads *and* transition into locked state
+                val = -(val - 1); // decrement the number of waiting threads *and* transition into locked state
             else {
                 // Since the lock is still held, we need to cancel the atomic update and wait again
                 __clrex();
@@ -146,6 +146,6 @@ void CriticalSection::Leave() {
     }
 }
 
-}  // namespace os
+} // namespace os
 
-}  // namespace nn
+} // namespace nn

@@ -65,6 +65,6 @@ nn::Result GetErrorCode(u32 *errorCode, TaskResultCode result) {
     return res;
 }
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

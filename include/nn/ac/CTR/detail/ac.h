@@ -34,10 +34,10 @@ public:
     static nn::Result SetClientVersion(u32 version);
 };
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace CTR
+} // namespace CTR
 
-}  // namespace ac
+} // namespace ac
 
-}  // namespace nn
+} // namespace nn

@@ -15,6 +15,6 @@ void Break(BreakReason reason);
 /// Triggers a panic
 void Panic();
 
-}  // namespace dbg
+} // namespace dbg
 
-}  // namespace nn
+} // namespace nn

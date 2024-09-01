@@ -65,8 +65,8 @@ nn::Result IpcManager::FinalizeUserIpc() {
     return RESULT_SUCCESS;
 }
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

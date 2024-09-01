@@ -37,6 +37,6 @@ enum class HeaderInfoType : u8 {
     Everything
 };
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

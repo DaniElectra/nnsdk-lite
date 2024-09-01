@@ -22,7 +22,7 @@ static nn::os::CriticalSection s_InitializeLock;
 static u32 s_InitializeCount;
 static constexpr auto PORT_NAME = "srv:";
 
-}  // namespace
+} // namespace
 
 nn::Result Initialize() {
     nn::Result res;
@@ -33,13 +33,12 @@ nn::Result Initialize() {
         InitializedLock = true;
     }
 
-    s_InitializeLock.Enter();  // TODO - This uses a nn::os::CriticalSection::ScopedLock for managing the lock
+    s_InitializeLock.Enter(); // TODO - This uses a nn::os::CriticalSection::ScopedLock for managing the lock
 
     if (s_InitializeCount > 0) {
         s_InitializeCount++;
         s_InitializeLock.Leave();
-        return {
-            nn::Result::Level_Info, nn::Result::Summary_Nop, nn::Result::ModuleType_SRV, nn::Result::Description_AlreadyInitialized};  // 0x82067F9
+        return {nn::Result::Level_Info, nn::Result::Summary_Nop, nn::Result::ModuleType_SRV, nn::Result::Description_AlreadyInitialized}; // 0x82067F9
     }
 
     while (true) {
@@ -62,7 +61,7 @@ nn::Result Initialize() {
     return res;
 }
 
-nn::Result GetServiceHandle(nn::Handle* out, const char* service, s32 serviceLen, u32 flags) {
+nn::Result GetServiceHandle(nn::Handle *out, const char *service, s32 serviceLen, u32 flags) {
     if (s_InitializeCount < 1) {
         // 0xD8A067F8
         return {nn::Result::Level_Permanent, nn::Result::Summary_InvalidState, nn::Result::ModuleType_SRV, nn::Result::Description_NotInitialized};
@@ -76,7 +75,7 @@ nn::Result GetServiceHandle(nn::Handle* out, const char* service, s32 serviceLen
     return detail::Service::GetServiceHandle(out, service, serviceLen, flags);
 }
 
-nn::Result GetServiceHandle(nn::os::ipc::Session* outSession, const char* service) {
+nn::Result GetServiceHandle(nn::os::ipc::Session *outSession, const char *service) {
     nn::Handle session{};
 
     nn::Result res = GetServiceHandle(&session, service, std::strlen(service), 0);
@@ -87,6 +86,6 @@ nn::Result GetServiceHandle(nn::os::ipc::Session* outSession, const char* servic
     return res;
 }
 
-}  // namespace srv
+} // namespace srv
 
-}  // namespace nn
+} // namespace nn

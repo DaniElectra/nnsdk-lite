@@ -53,8 +53,8 @@ CHECK_OFFSET(IpcManager, 0x18, privilegedInstance);
 CHECK_OFFSET(IpcManager, 0x1C, bossMInstance);
 CHECK_OFFSET(IpcManager, 0x20, titleId);
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

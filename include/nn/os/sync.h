@@ -50,6 +50,6 @@ public:
 };
 CHECK_SIZE(CriticalSection, 0xC);
 
-}  // namespace os
+} // namespace os
 
-}  // namespace nn
+} // namespace nn

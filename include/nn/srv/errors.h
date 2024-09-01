@@ -10,6 +10,6 @@ enum Description {
     Description_StringSizeMismatch = 7
 };
 
-}  // namespace srv
+} // namespace srv
 
-}  // namespace nn
+} // namespace nn

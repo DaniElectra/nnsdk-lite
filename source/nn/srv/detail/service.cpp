@@ -11,8 +11,8 @@ namespace srv {
 namespace detail {
 
 nn::Result Service::RegisterClient() {
-    u32* cmdbuf = nn::os::ipc::getThreadCommandBuffer();
-    nn::os::ipc::WriteHeader(cmdbuf, 1, 0, 2, 0);  // 0x10002
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 1, 0, 2, 0); // 0x10002
     nn::os::ipc::WriteProcessIDTranslate(cmdbuf, 1);
 
     nn::Result res = nn::svc::SendSyncRequest(s_Session.session);
@@ -23,12 +23,12 @@ nn::Result Service::RegisterClient() {
     return res;
 }
 
-nn::Result Service::GetServiceHandle(Handle* out, const char* service, s32 serviceLen, u32 flags) {
+nn::Result Service::GetServiceHandle(Handle *out, const char *service, s32 serviceLen, u32 flags) {
     Result RVar1;
     int iVar2;
 
-    u32* cmdbuf = nn::os::ipc::getThreadCommandBuffer();
-    nn::os::ipc::WriteHeader(cmdbuf, 5, 4, 0, 0);  // 0x50100
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 5, 4, 0, 0); // 0x50100
     std::memcpy(&cmdbuf[1], service, 8);
     cmdbuf[3] = serviceLen;
     cmdbuf[4] = flags;
@@ -42,8 +42,8 @@ nn::Result Service::GetServiceHandle(Handle* out, const char* service, s32 servi
     return res;
 }
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace srv
+} // namespace srv
 
-}  // namespace nn
+} // namespace nn

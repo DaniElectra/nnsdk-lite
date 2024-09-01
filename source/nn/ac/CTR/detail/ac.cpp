@@ -39,10 +39,10 @@ nn::Result Ac::SetClientVersion(u32 version) {
     return res;
 }
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace CTR
+} // namespace CTR
 
-}  // namespace ac
+} // namespace ac
 
-}  // namespace nn
+} // namespace nn

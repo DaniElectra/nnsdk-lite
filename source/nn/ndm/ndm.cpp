@@ -22,7 +22,7 @@ namespace {
 static u32 s_InitializedCount;
 static constexpr auto PORT_NAME_USER = "ndm:u";
 
-}  // namespace
+} // namespace
 
 nn::Result Initialize() {
     s_cs.Enter();
@@ -59,7 +59,7 @@ nn::Result Finalize() {
             return res;
         }
 
-        CTR::detail::Interface::s_Session.session = {};  // Clear handle
+        CTR::detail::Interface::s_Session.session = {}; // Clear handle
     }
 
     s_InitializedCount--;
@@ -71,6 +71,6 @@ nn::Result LeaveExclusiveState() {
     return CTR::detail::Interface::LeaveExclusiveState();
 }
 
-}  // namespace ndm
+} // namespace ndm
 
-}  // namespace nn
+} // namespace nn

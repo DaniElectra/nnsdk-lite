@@ -19,7 +19,7 @@ static u32 s_InitializedCount;
 static nn::os::CriticalSection s_cs = nn::os::CriticalSection();
 static constexpr auto PORT_NAME_USER = "ac:u";
 
-}  // namespace
+} // namespace
 
 /**
  * @brief Checks if the internal session ("ac:i") is initialized
@@ -61,7 +61,7 @@ nn::Result Initialize() {
     }
 
     s_InitializedCount++;
-    detail::Ac::SetClientVersion(0xB0301C8);  // 11.3.1-200
+    detail::Ac::SetClientVersion(0xB0301C8); // 11.3.1-200
     s_cs.Leave();
     return RESULT_SUCCESS;
 }
@@ -110,8 +110,8 @@ bool IsConnected() {
     return connected;
 }
 
-}  // namespace CTR
+} // namespace CTR
 
-}  // namespace ac
+} // namespace ac
 
-}  // namespace nn
+} // namespace nn

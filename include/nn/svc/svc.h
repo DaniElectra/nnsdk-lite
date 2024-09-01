@@ -20,7 +20,7 @@ nn::Result SleepThread(s64 nanoseconds);
  * @brief Creates an address arbiter
  * @param arbiter Output handle for the arbiter
  */
-nn::Result CreateAddressArbiter(Handle* arbiter);
+nn::Result CreateAddressArbiter(Handle *arbiter);
 
 /**
  * @brief Arbitrates an address
@@ -43,7 +43,7 @@ nn::Result CloseHandle(Handle handle);
  * @param handle Output handle for connecting to the port
  * @param portName Name of the port to connect
  */
-nn::Result ConnectToPort(Handle* out, const char* portName);
+nn::Result ConnectToPort(Handle *out, const char *portName);
 
 /**
  * @brief Sends a syncronization request to a specified session
@@ -57,6 +57,6 @@ nn::Result SendSyncRequest(Handle handle);
  */
 void Break(nn::dbg::BreakReason reason);
 
-}  // namespace svc
+} // namespace svc
 
-}  // namespace nn
+} // namespace nn

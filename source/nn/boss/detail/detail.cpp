@@ -60,8 +60,8 @@ nn::Result GetPrivilegedIpcInstance(Privileged *&instance) {
     return res;
 }
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

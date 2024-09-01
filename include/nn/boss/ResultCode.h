@@ -105,8 +105,8 @@ namespace detail {
 /// Returns the \link nn::Result \endlink that matches with the given \link ResultCode \endlink
 nn::Result ChangeBossRetCodeToResult(ResultCode code);
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

@@ -270,8 +270,8 @@ nn::Result ChangeBossRetCodeToResult(ResultCode code) {
     }
 }
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

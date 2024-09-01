@@ -20,10 +20,10 @@ public:
     static nn::Result LeaveExclusiveState();
 };
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace CTR
+} // namespace CTR
 
-}  // namespace ndm
+} // namespace ndm
 
-}  // namespace nn
+} // namespace nn

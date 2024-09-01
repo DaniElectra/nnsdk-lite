@@ -19,6 +19,6 @@ public:
 };
 CHECK_SIZE(TimeSpan, 8);
 
-}  // namespace fnd
+} // namespace fnd
 
-}  // namespace nn
+} // namespace nn

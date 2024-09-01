@@ -15,6 +15,6 @@ nn::Result Finalize();
 /// Leaves the esclusive state
 nn::Result LeaveExclusiveState();
 
-}  // namespace ndm
+} // namespace ndm
 
-}  // namespace nn
+} // namespace nn

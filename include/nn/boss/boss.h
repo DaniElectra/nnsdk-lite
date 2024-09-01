@@ -20,6 +20,6 @@ nn::Result Finalize();
  */
 nn::Result GetErrorCode(u32 *errorCode, TaskResultCode result);
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

@@ -10,8 +10,8 @@ namespace CTR {
 namespace detail {
 
 nn::Result Interface::LeaveExclusiveState() {
-    u32* cmdbuf = nn::os::ipc::getThreadCommandBuffer();
-    nn::os::ipc::WriteHeader(cmdbuf, 2, 0, 2, 0);  // 0x20002
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 2, 0, 2, 0); // 0x20002
     nn::os::ipc::WriteProcessIDTranslate(cmdbuf, 1);
 
     nn::Result res = nn::svc::SendSyncRequest(s_Session.session);
@@ -22,10 +22,10 @@ nn::Result Interface::LeaveExclusiveState() {
     return res;
 }
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace CTR
+} // namespace CTR
 
-}  // namespace ndm
+} // namespace ndm
 
-}  // namespace nn
+} // namespace nn

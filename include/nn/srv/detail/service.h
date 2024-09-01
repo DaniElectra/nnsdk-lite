@@ -22,11 +22,11 @@ public:
      * @param outSession Output session of the service
      * @param service Name of the service
      */
-    static nn::Result GetServiceHandle(Handle* out, const char* service, s32 serviceLen, u32 flags);
+    static nn::Result GetServiceHandle(Handle *out, const char *service, s32 serviceLen, u32 flags);
 };
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace srv
+} // namespace srv
 
-}  // namespace nn
+} // namespace nn

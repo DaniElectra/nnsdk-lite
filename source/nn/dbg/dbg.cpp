@@ -17,6 +17,6 @@ void Panic() {
     return nn::svc::Break(BreakReason::Panic);
 }
 
-}  // namespace dbg
+} // namespace dbg
 
-}  // namespace nn
+} // namespace nn

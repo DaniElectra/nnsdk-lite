@@ -33,8 +33,8 @@ nn::Result GetUserIpcInstance(User *&instance);
  */
 nn::Result GetPrivilegedIpcInstance(Privileged *&instance);
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

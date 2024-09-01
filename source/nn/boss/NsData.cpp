@@ -18,8 +18,8 @@ nn::Result NsData::Initialize(u32 nsDataId) {
 }
 
 nn::Result NsData::Delete() {
-    detail::User* userInstance;
-    detail::Privileged* privilegedInstance;
+    detail::User *userInstance;
+    detail::Privileged *privilegedInstance;
 
     // Try with privileged access first
     nn::Result res = detail::GetPrivilegedIpcInstance(privilegedInstance);
@@ -50,8 +50,8 @@ nn::Result NsData::GetHeaderInfo(HeaderInfoType type, void *buffer, u32 size) {
         return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0x0E);
     }
 
-    detail::User* userInstance;
-    detail::Privileged* privilegedInstance;
+    detail::User *userInstance;
+    detail::Privileged *privilegedInstance;
 
     // Try with privileged access first
     nn::Result res = detail::GetPrivilegedIpcInstance(privilegedInstance);
@@ -100,8 +100,8 @@ s32 NsData::ReadData(u8 *buffer, u32 size) {
         size = payloadSize - offset;
     }
 
-    detail::User* userInstance;
-    detail::Privileged* privilegedInstance;
+    detail::User *userInstance;
+    detail::Privileged *privilegedInstance;
 
     // Try with privileged access first
     nn::Result res = detail::GetPrivilegedIpcInstance(privilegedInstance);
@@ -185,8 +185,8 @@ s32 NsData::ReadData(u8 *buffer, u32 size) {
 }
 
 nn::Result NsData::SetReadFlag(bool flag) {
-    detail::User* userInstance;
-    detail::Privileged* privilegedInstance;
+    detail::User *userInstance;
+    detail::Privileged *privilegedInstance;
 
     // Try with privileged access first
     nn::Result res = detail::GetPrivilegedIpcInstance(privilegedInstance);
@@ -212,13 +212,13 @@ nn::Result NsData::SetReadFlag(bool flag) {
     return res;
 }
 
-nn::Result NsData::GetReadFlag(bool* flag) {
+nn::Result NsData::GetReadFlag(bool *flag) {
     if (flag == nullptr) {
         return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0x10);
     }
 
-    detail::User* userInstance;
-    detail::Privileged* privilegedInstance;
+    detail::User *userInstance;
+    detail::Privileged *privilegedInstance;
 
     // Try with privileged access first
     nn::Result res = detail::GetPrivilegedIpcInstance(privilegedInstance);
@@ -249,14 +249,15 @@ nn::Result NsData::GetPayloadSize(u32 *size) {
         return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0x0E);
     }
 
-    detail::User* userInstance;
-    detail::Privileged* privilegedInstance;
+    detail::User *userInstance;
+    detail::Privileged *privilegedInstance;
 
     // Try with privileged access first
     nn::Result res = detail::GetPrivilegedIpcInstance(privilegedInstance);
     if (privilegedAccess) {
         if (res) {
-            return privilegedInstance->GetNsDataHeaderInfoPrivileged(titleId, nsDataId, HeaderInfoType::PayloadSize, reinterpret_cast<u8 *>(size), sizeof(u32));
+            return privilegedInstance->GetNsDataHeaderInfoPrivileged(
+                titleId, nsDataId, HeaderInfoType::PayloadSize, reinterpret_cast<u8 *>(size), sizeof(u32));
         }
 
         return res;
@@ -276,6 +277,6 @@ nn::Result NsData::GetPayloadSize(u32 *size) {
     return res;
 }
 
-}  // namespace boss
+} // namespace boss
 
-}  // namespace nn
+} // namespace nn

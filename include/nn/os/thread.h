@@ -1,8 +1,8 @@
 #pragma once
 
-#include "nn/types.h"
 #include "nn/Result.h"
 #include "nn/fnd/TimeSpan.h"
+#include "nn/types.h"
 
 namespace nn {
 
@@ -25,6 +25,6 @@ public:
     static nn::Result SleepImpl(nn::fnd::TimeSpan timespan);
 };
 
-}  // namespace os
+} // namespace os
 
-}  // namespace nn
+} // namespace nn
