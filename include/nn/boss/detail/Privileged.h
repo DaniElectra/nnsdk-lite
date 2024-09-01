@@ -5,6 +5,7 @@
 #include "nn/Result.h"
 #include "nn/boss/NsDataHeaderInfo.h"
 #include "nn/boss/TaskResultCode.h"
+#include "nn/fs/MediaType.h"
 
 namespace nn {
 
@@ -16,6 +17,12 @@ namespace detail {
 class Privileged {
 public:
     nn::Handle session;
+
+    /**
+     * @brief Gets information about the current storage
+     * @param unkOut Unknown output parameter
+     */
+    nn::Result GetStorageInfo(u32 *unkOut);
 
     /**
      * @brief Gets a list of NS Data IDs
@@ -75,6 +82,18 @@ public:
      * @param result Task result code
      */
     nn::Result GetErrorCode(u32 *errorCode, TaskResultCode result);
+
+    /**
+     * @brief Registers a storage entry to be used for BOSS
+     * @param extDataId Extra Data ID to be used
+     * @param unk1 Unknown parameter
+     * @param unk2 Unknown parameter
+     * @param mediaType Media type to store the data
+     */
+    nn::Result RegisterStorageEntry(u64 extDataId, u32 unk1, u16 unk2, nn::fs::MediaType mediaType);
+
+    /// Unregisters the current storage being used
+    nn::Result UnregisterStorage();
 
     /**
      * @brief Deletes the content for the specified NS Data ID with privileged permissions

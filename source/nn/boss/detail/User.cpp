@@ -1,6 +1,7 @@
 #include "nn/boss/detail/User.h"
 #include "nn/Result.h"
 #include "nn/boss/TaskResultCode.h"
+#include "nn/fs/MediaType.h"
 #include "nn/os/ipc.h"
 #include "nn/svc/svc.h"
 
@@ -19,6 +20,19 @@ nn::Result User::InitializeSession(u64 titleId) {
 
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result User::GetStorageInfo(u32 *unkOut) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 4, 0, 0, 0); // 0x40000
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *unkOut = cmdbuf[2];
         res = RAW_RESULT(cmdbuf[1]);
     }
 
@@ -128,6 +142,35 @@ nn::Result User::GetErrorCode(u32 *errorCode, TaskResultCode result) {
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *errorCode = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result User::RegisterStorageEntry(u64 extDataId, u32 unk1, u16 unk2, nn::fs::MediaType mediaType) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x2F, 5, 0, 0); // 0x2F0140
+    cmdbuf[1] = extDataId;
+    cmdbuf[2] = extDataId >> 32;
+    cmdbuf[3] = unk2;
+    cmdbuf[4] = unk1;
+    cmdbuf[5] = static_cast<u32>(mediaType);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result User::UnregisterStorage() {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x30, 0, 0, 0); // 0x300000
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
         res = RAW_RESULT(cmdbuf[1]);
     }
 

@@ -9,6 +9,19 @@ namespace boss {
 
 namespace detail {
 
+nn::Result Privileged::GetStorageInfo(u32 *unkOut) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 4, 0, 0, 0); // 0x40000
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *unkOut = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
 nn::Result Privileged::GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *outEntries, u16 startIndex, u32 startNsDataId, u16 *lastIndex) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x10, 4, 2, 0); // 0x100102
@@ -112,6 +125,35 @@ nn::Result Privileged::GetErrorCode(u32 *errorCode, TaskResultCode result) {
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *errorCode = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::RegisterStorageEntry(u64 extDataId, u32 unk1, u16 unk2, nn::fs::MediaType mediaType) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x2F, 5, 0, 0); // 0x2F0140
+    cmdbuf[1] = extDataId;
+    cmdbuf[2] = extDataId >> 32;
+    cmdbuf[3] = unk2;
+    cmdbuf[4] = unk1;
+    cmdbuf[5] = static_cast<u32>(mediaType);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::UnregisterStorage() {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x30, 0, 0, 0); // 0x300000
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
         res = RAW_RESULT(cmdbuf[1]);
     }
 
