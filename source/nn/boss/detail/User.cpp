@@ -153,8 +153,8 @@ nn::Result User::RegisterStorageEntry(u64 extDataId, u32 unk1, u16 unk2, nn::fs:
     nn::os::ipc::WriteHeader(cmdbuf, 0x2F, 5, 0, 0); // 0x2F0140
     cmdbuf[1] = extDataId;
     cmdbuf[2] = extDataId >> 32;
-    cmdbuf[3] = unk2;
-    cmdbuf[4] = unk1;
+    cmdbuf[3] = unk1;
+    cmdbuf[4] = unk2;
     cmdbuf[5] = static_cast<u32>(mediaType);
 
     nn::Result res = nn::svc::SendSyncRequest(session);
