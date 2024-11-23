@@ -6,15 +6,9 @@ jobs:
   formatting-check:
     name: Formatting Check
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        path:
-          - 'include'
-          - 'source'
     steps:
     - uses: actions/checkout@v4
     - name: Run clang-format style check
       uses: jidicula/clang-format-action@v4.13.0
       with:
-        clang-format-version: '17'
-        check-path: ${{ matrix.path }}
+        clang-format-version: '18'
