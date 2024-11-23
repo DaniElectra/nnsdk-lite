@@ -1,7 +1,10 @@
 #include "nn/boss/ResultCode.h"
 #include "nn/Result.h"
 
+// TODO - Why is clang-format failing here?
+// clang-format off
 #define MAKE_RESULT(level, summary, desc) {level, summary, nn::Result::ModuleType_BOSS, static_cast<int>(desc)}
+// clang-format on
 
 namespace nn {
 
