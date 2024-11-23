@@ -1,6 +1,6 @@
 # Adapted from https://github.com/gamestabled/auto_nnsdk/blob/main/CMakeLists.txt
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(nnsdk-lite CXX ASM)
 

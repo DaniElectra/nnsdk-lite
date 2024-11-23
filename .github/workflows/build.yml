@@ -1,0 +1,18 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build-3ds:
+    name: Nintendo 3DS build
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build nnsdk
+      run: |
+        docker build . -t builder
+        docker run --rm -v ${PWD}:/project builder
+    - uses: actions/upload-artifact@v4
+      with:
+       name: libnnsdk_3DS
+       path: libnnsdk.a

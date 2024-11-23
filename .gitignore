@@ -1,2 +1,7 @@
+# Cache folder
 .cache
+
+# Build files
 build
+*.a
+*.o
