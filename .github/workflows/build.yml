@@ -11,7 +11,7 @@ jobs:
     - name: Build nnsdk
       run: |
         docker build . -t builder
-        docker run --rm -v ${PWD}:/project -w /project builder cmake -DCMAKE_TOOLCHAIN_FILE="${DEVKITPRO}/cmake/3DS.cmake" -B build
+        docker run --rm -v ${PWD}:/project -w /project builder cmake -DCMAKE_TOOLCHAIN_FILE="/opt/devkitpro/cmake/3DS.cmake" -B build
         docker run --rm -v ${PWD}:/project -w /project/build builder make
     - uses: actions/upload-artifact@v4
       with:
