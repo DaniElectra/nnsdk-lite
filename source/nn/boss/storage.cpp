@@ -30,7 +30,7 @@ nn::Result GetStorageInfo(u32 *unkOut) {
 
 nn::Result RegisterStorage(u32 lowExtDataId, u32 unk1, u16 unk2, StorageType storageType) {
     if (unk2 > 0x2000) {
-        return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0xC0);
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidStorageParameter);
     }
 
     u64 extDataId;

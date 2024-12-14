@@ -44,7 +44,7 @@ nn::Result Finalize() {
 
 nn::Result GetErrorCode(u32 *errorCode, TaskResultCode result) {
     if (errorCode == nullptr) {
-        return {nn::Result::Level_Permanent, nn::Result::Summary_WouldBlock, nn::Result::ModuleType_BOSS, static_cast<int>(ResultCode::Unknown0x4D)};
+        return {nn::Result::Level_Permanent, nn::Result::Summary_WouldBlock, nn::Result::ModuleType_BOSS, static_cast<int>(ResultCode::Unexpect)};
     }
 
     detail::User *userInstance;

@@ -47,7 +47,7 @@ nn::Result NsData::Delete() {
 
 nn::Result NsData::GetHeaderInfo(HeaderInfoType type, void *buffer, u32 size) {
     if (buffer == nullptr) {
-        return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0x0E);
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidNsDataValue);
     }
 
     detail::User *userInstance;
@@ -214,7 +214,7 @@ nn::Result NsData::SetReadFlag(bool flag) {
 
 nn::Result NsData::GetReadFlag(bool *flag) {
     if (flag == nullptr) {
-        return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0x10);
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidNsDataReadFlag);
     }
 
     detail::User *userInstance;
@@ -246,7 +246,7 @@ nn::Result NsData::GetReadFlag(bool *flag) {
 
 nn::Result NsData::GetPayloadSize(u32 *size) {
     if (size == nullptr) {
-        return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0x0E);
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidNsDataValue);
     }
 
     detail::User *userInstance;

@@ -31,7 +31,7 @@ nn::Result GetUserIpcInstance(User *&instance) {
     instance = userInstance;
 
     if (userInstance == nullptr) {
-        res = ChangeBossRetCodeToResult(ResultCode::Unknown0x2B);
+        res = ChangeBossRetCodeToResult(ResultCode::IpcNotSessionInitialized);
     } else {
         res = RESULT_SUCCESS;
     }
@@ -52,7 +52,7 @@ nn::Result GetPrivilegedIpcInstance(Privileged *&instance) {
     instance = privilegedInstance;
 
     if (privilegedInstance == nullptr) {
-        res = ChangeBossRetCodeToResult(ResultCode::Unknown0x2B);
+        res = ChangeBossRetCodeToResult(ResultCode::IpcNotSessionInitialized);
     } else {
         res = RESULT_SUCCESS;
     }

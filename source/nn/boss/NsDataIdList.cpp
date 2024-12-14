@@ -22,7 +22,7 @@ u32 NsDataIdList::GetNsDataId(u16 index) {
 
 nn::Result GetNsDataIdList(u32 filter, NsDataIdList *list) {
     if (list == nullptr || list->count == 0 || list->count > 0x1000) {
-        return detail::ChangeBossRetCodeToResult(ResultCode::Unknown0x07);
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidNsDataIdList);
     }
 
     detail::User *userInstance;
@@ -43,9 +43,11 @@ nn::Result GetNsDataIdList(u32 filter, NsDataIdList *list) {
     }
 
     // This is inlined with the raw result code: 0xD840F845
-    nn::Result resultUnk45 = {
-        nn::Result::Level_Permanent, nn::Result::Summary_WouldBlock, nn::Result::ModuleType_BOSS, static_cast<int>(ResultCode::Unknown0x45)};
-    if (res == resultUnk45) {
+    nn::Result resultSizeShortage = {nn::Result::Level_Permanent,
+                                     nn::Result::Summary_WouldBlock,
+                                     nn::Result::ModuleType_BOSS,
+                                     static_cast<int>(ResultCode::NsDataListSizeShortage)};
+    if (res == resultSizeShortage) {
         list->startNsDataId = list->GetNsDataId(list->outEntries - 1);
     }
 

@@ -20,7 +20,7 @@ constexpr auto PORT_NAME_USER = "boss:U";
 
 nn::Result IpcManager::InitializeUserIpc() {
     if (userInitialized) {
-        return ChangeBossRetCodeToResult(ResultCode::Unknown0x2E);
+        return ChangeBossRetCodeToResult(ResultCode::AlreadyInitialized);
     }
 
     nn::Result res = nn::srv::Initialize();
@@ -53,7 +53,7 @@ nn::Result IpcManager::InitializeUserIpc() {
 
 nn::Result IpcManager::FinalizeUserIpc() {
     if (!userInitialized) {
-        return ChangeBossRetCodeToResult(ResultCode::Unknown0x2B);
+        return ChangeBossRetCodeToResult(ResultCode::IpcNotSessionInitialized);
     }
 
     if (userSession.session.m_Handle != 0) {
