@@ -14,7 +14,7 @@ nn::Result Initialize();
 nn::Result Finalize();
 
 /**
- * @brief Gets the error code for the given \link TaskResultCode \endlink
+ * @brief Gets the error code for the given @link TaskResultCode @endlink
  * @param errorCode Output error code
  * @param result Task result code
  */

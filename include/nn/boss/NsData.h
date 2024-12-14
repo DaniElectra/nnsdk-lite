@@ -34,16 +34,16 @@ public:
     }
 
     /**
-     * @brief Initializes \link NsData \endlink with the given NS Data ID
+     * @brief Initializes @link NsData @endlink with the given NS Data ID
      * @param nsDataId NS Data ID
      */
     nn::Result Initialize(u32 nsDataId);
 
-    /// Deletes the \link NsData \endlink
+    /// Deletes the @link NsData @endlink
     nn::Result Delete();
 
     /**
-     * @brief Gets header information about the \link NsData \endlink
+     * @brief Gets header information about the @link NsData @endlink
      * @param type Header info type
      * @param buffer Output buffer
      * @param size Buffer size
@@ -51,7 +51,7 @@ public:
     nn::Result GetHeaderInfo(HeaderInfoType type, void *buffer, u32 size);
 
     /**
-     * @brief Reads the content from the \link NsData \endlink
+     * @brief Reads the content from the @link NsData @endlink
      * @param buffer Output buffer
      * @param size Buffer size
      * @return Size read from the content, or negative value for errors
@@ -72,7 +72,7 @@ public:
 
 private:
     /**
-     * @brief Gets the payload size of the \link NsData \endlink
+     * @brief Gets the payload size of the @link NsData @endlink
      * @remark UNOFFICIAL: This is inlined so the name may be incorrect
      * @param size Output payload size
      */

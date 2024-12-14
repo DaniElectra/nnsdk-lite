@@ -9,7 +9,7 @@ namespace boss {
 
 // UNOFFICIAL: The struct name may not be correct
 
-/// Contains all information about a \link NsData \endlink
+/// Contains all information about a @link NsData @endlink
 struct NsDataHeaderInfo {
     u64 titleId;
     u32 unknown;

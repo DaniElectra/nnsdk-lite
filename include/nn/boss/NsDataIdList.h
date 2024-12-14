@@ -19,8 +19,8 @@ public:
     u32 count;
 
     /**
-     * @brief Constructs \link NsDataIdList \endlink with the given parameters
-     * @param listBuffer Array of \c u32 for holding the NS Data IDs
+     * @brief Constructs @link NsDataIdList @endlink with the given parameters
+     * @param listBuffer Array of @c u32 for holding the NS Data IDs
      * @param listSize Number of elements that the list can hold
      */
     NsDataIdList(u32 *listBuffer, u16 listSize) {
@@ -33,7 +33,7 @@ public:
         }
     }
 
-    /// Initializes the \link NsDataIdList \endlink
+    /// Initializes the @link NsDataIdList @endlink
     void Initialize();
 
     /**
@@ -51,7 +51,7 @@ CHECK_OFFSET(NsDataIdList, 0x0C, list);
 CHECK_OFFSET(NsDataIdList, 0x10, count);
 
 /**
- * @brief Fills the given \link NsDataIdList \endlink with NS Data IDs
+ * @brief Fills the given @link NsDataIdList @endlink with NS Data IDs
  * @param filter Filter for content datatypes, see https://www.3dbrew.org/wiki/BOSSU:GetNsDataIdList#Filter
  * @param list Output list
  */

@@ -102,7 +102,7 @@ enum class ResultCode : u32 {
 
 namespace detail {
 
-/// Returns the \link nn::Result \endlink that matches with the given \link ResultCode \endlink
+/// Returns the @link nn::Result @endlink that matches with the given @link ResultCode @endlink
 nn::Result ChangeBossRetCodeToResult(ResultCode code);
 
 } // namespace detail

@@ -83,7 +83,7 @@ public:
     nn::Result GetNsDataNewFlag(u32 nsDataId, bool *flag);
 
     /**
-     * @brief Gets the error code for the given \link TaskResultCode \endlink
+     * @brief Gets the error code for the given @link TaskResultCode @endlink
      * @param errorCode Output error code
      * @param result Task result code
      */
