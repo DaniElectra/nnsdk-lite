@@ -24,9 +24,6 @@ nn::Result Service::RegisterClient() {
 }
 
 nn::Result Service::GetServiceHandle(Handle *out, const char *service, s32 serviceLen, u32 flags) {
-    Result RVar1;
-    int iVar2;
-
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 5, 4, 0, 0); // 0x50100
     std::memcpy(&cmdbuf[1], service, 8);
