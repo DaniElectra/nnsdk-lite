@@ -41,6 +41,14 @@ nn::Result GetPrivilegedIpcInstance(Privileged *&instance);
  */
 s32 strnlen(const char *str, u32 size);
 
+/**
+ * @brief Determines the length of the given UTF-16 string
+ * @param str Input string
+ * @param size Maximum size to check
+ * @return The length of the string
+ */
+s32 wcsnlen(const char16_t *str, u32 size);
+
 } // namespace detail
 
 } // namespace boss

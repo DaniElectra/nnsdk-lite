@@ -108,6 +108,86 @@ nn::Result TaskActionBase::SetRootCa(u32 certId) {
     return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPolicy4);
 }
 
+nn::Result NsaDownloadAction::Initialize(const char *url) {
+    Result res;
+
+    if (url == nullptr || url[0] == '\0') {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidUrl);
+    }
+
+    u32 size = detail::strnlen(url, URL_SIZE);
+    if (size > URL_SIZE - 1) {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidUrl);
+    }
+
+    // memclr(&config, sizeof(config));
+    std::memset(&config, 0, sizeof(config));
+
+    config.code = ActionCodeNsaDownload;
+    std::strncpy(config.url, url, URL_SIZE);
+
+    res = SetRootCa(7);
+    if (res.Failed()) {
+        return res;
+    }
+
+    res = SetRootCa(3);
+    if (res.Failed()) {
+        return res;
+    }
+    res = SetRootCa(6);
+    if (res.Failed()) {
+        return res;
+    }
+
+    return RESULT_SUCCESS;
+}
+
+nn::Result UploadAction::Initialize(const char *url, nn::Handle handle, FileDescriptor fd) {
+    if (url == nullptr || url[0] == '\0') {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidUrl);
+    }
+
+    u32 size = detail::strnlen(url, URL_SIZE);
+    if (size > URL_SIZE - 1) {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidUrl);
+    }
+
+    // memclr(&config, sizeof(config));
+    std::memset(&config, 0, sizeof(config));
+
+    config.code = ActionCodeUpload;
+    std::strncpy(config.url, url, URL_SIZE - 1);
+
+    config.fileHandle = handle;
+    config.unk_0x4 = fd;
+
+    return RESULT_SUCCESS;
+}
+
+nn::Result DataStoreDownloadAction::Initialize(u32 gameServerId, const char16_t *accessKey) {
+    if (accessKey == nullptr) {
+        // 0xD8E0FBF6
+        return {
+            nn::Result::Level_Permanent, nn::Result::Summary_InvalidArgument, nn::Result::ModuleType_BOSS, nn::Result::Description_InvalidPointer};
+    }
+
+    u32 size = detail::wcsnlen(accessKey, URL_SIZE);
+    if (size == 0 || size > 8) {
+        // 0xD8E0FBEC
+        return {nn::Result::Level_Permanent, nn::Result::Summary_InvalidArgument, nn::Result::ModuleType_BOSS, nn::Result::Description_InvalidSize};
+    }
+
+    // memclr(&config, sizeof(config));
+    std::memset(&config, 0, sizeof(config));
+    config.code = ActionCodeDataStoreDownload;
+    config.unk_0x4 = 5;
+    *reinterpret_cast<u32 *>(config.actionData) = gameServerId;
+    std::memcpy(config.actionData + 4, accessKey, size * 2);
+
+    return RESULT_SUCCESS;
+}
+
 } // namespace boss
 
 } // namespace nn

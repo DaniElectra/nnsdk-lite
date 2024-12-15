@@ -78,6 +78,24 @@ s32 strnlen(const char *str, u32 size) {
     return index;
 }
 
+s32 wcsnlen(const char16_t *str, u32 size) {
+    u32 index;
+    bool nullChar;
+    bool indexBelowMax;
+    bool sizeNotIndex;
+
+    index = 0;
+    do {
+        nullChar = str[index] == '\0';
+        sizeNotIndex = size != index;
+        indexBelowMax = index <= size;
+        if ((nullChar || indexBelowMax) && (!nullChar && sizeNotIndex)) {
+            index = index + 1;
+        }
+    } while ((nullChar || indexBelowMax) && (!nullChar && sizeNotIndex));
+    return index;
+}
+
 } // namespace detail
 
 } // namespace boss

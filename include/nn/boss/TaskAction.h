@@ -121,6 +121,9 @@ CHECK_OFFSET(TaskActionConfig, 0x788, rootCaCount);
 CHECK_OFFSET(TaskActionConfig, 0x78C, clientCertCount);
 CHECK_OFFSET(TaskActionConfig, 0x794, unk_0x794);
 
+/// The details of this type are unknown
+using FileDescriptor = u8;
+
 /// Base class for task actions. Must not be inherited directly, @link TaskAction @endlink must be used instead
 class TaskActionBase {
 public:
@@ -163,6 +166,42 @@ public:
     ~TaskAction();
 };
 CHECK_SIZE(TaskAction, 0x7D8);
+
+/// Task action used for downloading data from a given URL, principally an @link NsData @endlink
+class NsaDownloadAction : public TaskAction {
+public:
+    /**
+     * @brief Initializes the task action
+     * @param url Target URL to download the data from
+     */
+    nn::Result Initialize(const char *url);
+};
+CHECK_SIZE(NsaDownloadAction, 0x7D8);
+
+/// Task action used for uploading data to a given URL
+class UploadAction : public TaskAction {
+public:
+    /**
+     * @brief Initializes the task action
+     * @param url Target URL where the data will be uploaded
+     * @param handle File handle where data will be read from
+     * @param fd Unknown parameter
+     */
+    nn::Result Initialize(const char *url, nn::Handle handle, FileDescriptor fd);
+};
+CHECK_SIZE(UploadAction, 0x7D8);
+
+/// Task action used for downloading data from DataStore through an Hpp server. Stores notification data?
+class DataStoreDownloadAction : public TaskAction {
+public:
+    /**
+     * @brief Initializes the task action
+     * @param gameServerId Game server ID to download data from
+     * @param accessKey Access key for accessing the server
+     */
+    nn::Result Initialize(u32 gameServerId, const char16_t *accessKey);
+};
+CHECK_SIZE(DataStoreDownloadAction, 0x7D8);
 
 } // namespace boss
 
