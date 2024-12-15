@@ -27,7 +27,7 @@ enum ActionCode : u8 {
     ActionCodeUnknown0x1 = 0x1,
     /// Action code for downloading data from the given URL, principally an @link NsData @endlink
     ActionCodeNsaDownload,
-    /// Action data for uploading data to the given URL
+    /// Action code for uploading data to the given URL
     ActionCodeUpload,
     /// Unknown action code
     ActionCodeUnknown0x4,
@@ -41,7 +41,7 @@ enum ActionCode : u8 {
     ActionCodeTiu,
     /// Action code used by task ID "splu" from the Home Menu
     ActionCodeSplu,
-    /// Action code downloading data from DataStore through an Hpp server. Stores notification data?
+    /// Action code used for downloading data from DataStore through an Hpp server. Stores notification data?
     ActionCodeDataStoreDownload,
     /// Action code related to DataStore?
     ActionCodeDataStore2,
