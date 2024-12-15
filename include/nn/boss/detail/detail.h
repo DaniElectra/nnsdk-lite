@@ -33,6 +33,14 @@ nn::Result GetUserIpcInstance(User *&instance);
  */
 nn::Result GetPrivilegedIpcInstance(Privileged *&instance);
 
+/**
+ * @brief Determines the length of the given string
+ * @param str Input string
+ * @param size Maximum size to check
+ * @returns The length of the string
+ */
+s32 strnlen(const char *str, u32 size);
+
 } // namespace detail
 
 } // namespace boss
