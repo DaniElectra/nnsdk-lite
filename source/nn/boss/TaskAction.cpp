@@ -1,6 +1,6 @@
+#include "nn/boss/TaskAction.h"
 #include "nn/Result.h"
 #include "nn/boss/ResultCode.h"
-#include "nn/boss/TaskAction.h"
 #include "nn/boss/detail/detail.h"
 
 namespace nn {
@@ -108,6 +108,6 @@ nn::Result TaskActionBase::SetRootCa(u32 certId) {
     return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPolicy4);
 }
 
-}
+} // namespace boss
 
-}
+} // namespace nn

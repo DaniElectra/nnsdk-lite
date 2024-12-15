@@ -72,8 +72,7 @@ nn::Result ChangeBossRetCodeToResult(ResultCode code) {
             return MAKE_BOSS_RESULT(nn::Result::Level_Permanent, nn::Result::Summary_InvalidArgument, ResultCode::InvalidNextExecuteTime);
         case ResultCode::HttpRequestHeaderPointerNull:
             // 0xD8E0F813
-            return MAKE_BOSS_RESULT(
-                nn::Result::Level_Permanent, nn::Result::Summary_InvalidArgument, ResultCode::HttpRequestHeaderPointerNull);
+            return MAKE_BOSS_RESULT(nn::Result::Level_Permanent, nn::Result::Summary_InvalidArgument, ResultCode::HttpRequestHeaderPointerNull);
         case ResultCode::Unknown0x14:
             // 0xD8E0F814
             return MAKE_BOSS_RESULT(nn::Result::Level_Permanent, nn::Result::Summary_InvalidArgument, ResultCode::Unknown0x14);
