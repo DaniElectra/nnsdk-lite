@@ -160,7 +160,7 @@ nn::Result UploadAction::Initialize(const char *url, nn::Handle handle, FileDesc
     std::strncpy(config.url, url, URL_SIZE - 1);
 
     config.fileHandle = handle;
-    config.unk_0x4 = fd;
+    config.property0x9 = fd;
 
     return RESULT_SUCCESS;
 }
@@ -181,7 +181,7 @@ nn::Result DataStoreDownloadAction::Initialize(u32 gameServerId, const char16_t 
     // memclr(&config, sizeof(config));
     std::memset(&config, 0, sizeof(config));
     config.code = ActionCodeDataStoreDownload;
-    config.unk_0x4 = 5;
+    config.property0x9 = 5;
     *reinterpret_cast<u32 *>(config.actionData) = gameServerId;
     std::memcpy(config.actionData + 4, accessKey, size * 2);
 

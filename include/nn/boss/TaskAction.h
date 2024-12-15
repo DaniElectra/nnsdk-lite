@@ -68,19 +68,19 @@ struct TaskActionConfig {
     u8 fsRootCA;
     /// If non-zero, enables the task client certificate to be read from the filesystem. May be a bool?
     u8 fsClientCert;
-    /// Unknown. Controls the "X-Boss-Apinfo" header?
+    /// Unknown. Must be below 8 (not inclusive). Controls the "X-Boss-Apinfo" header?
     u8 apInfoType;
-    /// This parameter is unknown. Controls what data is relevant?
-    u8 unk_0x4;
-    /// Unknown. Controls what system information is sent to the server?
+    /// This parameter is unknown. Must be between 0 and 6 inclusively. Controls what data is relevant? Matches with @link PropertyType @endlink 0x9
+    u8 property0x9;
+    /// Unknown. Must be below 8 (not inclusive). Controls what system information is sent to the server?
     u8 cfgInfoType;
     INSERT_PADDING_BYTES(2);
-    /// This parameter is unknown
-    u32 unk_0x8;
-    /// This parameter is unknown
-    u32 unk_0xC;
-    /// This parameter is unknown
-    u32 unk_0x10;
+    /// This parameter is unknown. Matches with @link PropertyType @endlink 0x16
+    u32 property0x16;
+    /// This parameter is unknown. Matches with @link PropertyType @endlink 0x8
+    u32 property0x8;
+    /// This parameter is unknown. Matches with @link PropertyType @endlink 0x3B
+    u32 property0x3B;
     /// Contains a file handle with the data to send
     nn::Handle fileHandle{};
     /// Additional data for the action. The contents depend on the @link ActionCode @endlink used
@@ -98,19 +98,19 @@ struct TaskActionConfig {
     /// Amount of client certificates stored in the previous array
     u32 clientCertCount;
     INSERT_UNKNOWN_BYTES(4);
-    /// This parameter is unknown
-    u8 unk_0x794[0x40];
+    /// This parameter is unknown. Matches with @link PropertyType @endlink 0x15
+    u8 property0x15[0x40];
 };
 CHECK_SIZE(TaskActionConfig, 0x7D4);
 CHECK_OFFSET(TaskActionConfig, 0x0, code);
 CHECK_OFFSET(TaskActionConfig, 0x1, fsRootCA);
 CHECK_OFFSET(TaskActionConfig, 0x2, fsClientCert);
 CHECK_OFFSET(TaskActionConfig, 0x3, apInfoType);
-CHECK_OFFSET(TaskActionConfig, 0x4, unk_0x4);
+CHECK_OFFSET(TaskActionConfig, 0x4, property0x9);
 CHECK_OFFSET(TaskActionConfig, 0x5, cfgInfoType);
-CHECK_OFFSET(TaskActionConfig, 0x8, unk_0x8);
-CHECK_OFFSET(TaskActionConfig, 0xC, unk_0xC);
-CHECK_OFFSET(TaskActionConfig, 0x10, unk_0x10);
+CHECK_OFFSET(TaskActionConfig, 0x8, property0x16);
+CHECK_OFFSET(TaskActionConfig, 0xC, property0x8);
+CHECK_OFFSET(TaskActionConfig, 0x10, property0x3B);
 CHECK_OFFSET(TaskActionConfig, 0x14, fileHandle);
 CHECK_OFFSET(TaskActionConfig, 0x18, actionData);
 CHECK_OFFSET(TaskActionConfig, 0x218, url);
@@ -119,7 +119,7 @@ CHECK_OFFSET(TaskActionConfig, 0x778, rootCAs);
 CHECK_OFFSET(TaskActionConfig, 0x784, clientCerts);
 CHECK_OFFSET(TaskActionConfig, 0x788, rootCaCount);
 CHECK_OFFSET(TaskActionConfig, 0x78C, clientCertCount);
-CHECK_OFFSET(TaskActionConfig, 0x794, unk_0x794);
+CHECK_OFFSET(TaskActionConfig, 0x794, property0x15);
 
 /// The details of this type are unknown
 using FileDescriptor = u8;
