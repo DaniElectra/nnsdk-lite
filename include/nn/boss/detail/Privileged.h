@@ -4,6 +4,7 @@
 #include "nn/Handle.h"
 #include "nn/Result.h"
 #include "nn/boss/NsDataHeaderInfo.h"
+#include "nn/boss/PropertyType.h"
 #include "nn/boss/TaskResultCode.h"
 #include "nn/fs/MediaType.h"
 
@@ -24,6 +25,9 @@ public:
      */
     nn::Result GetStorageInfo(u32 *unkOut);
 
+    /// Internally retrieves the list of task IDs from the application so that it can be accessed through @link ReceiveProperty @endlink
+    nn::Result GetTaskIdList();
+
     /**
      * @brief Gets a list of NS Data IDs
      * @param filter Filter by content datatypes, see https://www.3dbrew.org/wiki/BOSSU:GetNsDataIdList#Filter
@@ -35,6 +39,15 @@ public:
      * @param lastIndex Output last index written to the list
      */
     nn::Result GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *outEntries, u16 startIndex, u32 startNsDataId, u16 *lastIndex);
+
+    /**
+     * @brief Receives a property from the currently loaded session
+     * @param type Property type
+     * @param buf Output buffer
+     * @param size Buffer size
+     * @param sizeRead Size written to the buffer
+     */
+    nn::Result ReceiveProperty(PropertyType type, u8 *buf, u32 size, u32 *sizeRead);
 
     /**
      * @brief Deletes the content for the specified NS Data ID

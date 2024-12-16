@@ -6,7 +6,7 @@ namespace nn {
 
 namespace boss {
 
-/// Properties of a task
+/// Properties of a session. Most of these properties are task-specific and would be used when configuring or receiving the status of one
 enum class PropertyType : u16 {
     Priority = 0,
     SchedulingPolicy,

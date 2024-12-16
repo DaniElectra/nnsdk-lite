@@ -1,5 +1,6 @@
 #include "nn/boss/detail/User.h"
 #include "nn/Result.h"
+#include "nn/boss/PropertyType.h"
 #include "nn/boss/TaskResultCode.h"
 #include "nn/fs/MediaType.h"
 #include "nn/os/ipc.h"
@@ -39,6 +40,18 @@ nn::Result User::GetStorageInfo(u32 *unkOut) {
     return res;
 }
 
+nn::Result User::GetTaskIdList() {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0xE, 0, 0, 0); // 0xE0000
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
 nn::Result User::GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *outEntries, u16 startIndex, u32 startNsDataId, u16 *lastIndex) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x10, 4, 2, 0); // 0x100102
@@ -52,6 +65,22 @@ nn::Result User::GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *out
     if (res) {
         *outEntries = cmdbuf[2];
         *lastIndex = cmdbuf[3];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result User::ReceiveProperty(PropertyType type, u8 *buffer, u32 size, u32 *sizeRead) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x16, 2, 2, 0); // 0x160082
+    cmdbuf[1] = static_cast<u16>(type);
+    cmdbuf[2] = size;
+    nn::os::ipc::WriteMappedBufferWrite(cmdbuf, 3, buffer, size);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *sizeRead = cmdbuf[2];
         res = RAW_RESULT(cmdbuf[1]);
     }
 
