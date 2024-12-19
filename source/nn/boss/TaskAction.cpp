@@ -108,6 +108,28 @@ nn::Result TaskActionBase::SetRootCa(u32 certId) {
     return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPolicy4);
 }
 
+nn::Result FileListAction::Initialize(const char *url, nn::Handle handle) {
+    if (url == nullptr || url[0] == '\0') {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidUrl);
+    }
+
+    u32 size = detail::strnlen(url, URL_SIZE);
+    if (size > URL_SIZE) {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidUrl);
+    }
+
+    // memclr(&config, sizeof(config));
+    std::memset(&config, 0, sizeof(config));
+
+    config.code = ActionCodeFileList;
+    std::strncpy(config.url, url, URL_SIZE);
+
+    config.fileHandle = handle;
+    config.property0x9 = 2;
+
+    return RESULT_SUCCESS;
+}
+
 nn::Result NsaDownloadAction::Initialize(const char *url) {
     Result res;
 

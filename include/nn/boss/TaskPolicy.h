@@ -9,7 +9,7 @@ namespace nn {
 
 namespace boss {
 
-// UNOFFICIAL: The official name for this enum is unknoen
+// UNOFFICIAL: The official name for this enum is unknown
 
 /// Represents the priority of a task
 enum PriorityLevel : u8 {

@@ -19,12 +19,12 @@ constexpr int MAX_HEADERS = 3;
 constexpr int MAX_ROOT_CAS = 3;
 constexpr int MAX_CLIENT_CERTS = 1;
 
-// UNOFFICIAL: The official name of this enum is unknown
+// UNOFFICIAL: The official name of these enums are unknown
 
 /// Represents an action that a task will perform
 enum ActionCode : u8 {
-    /// Unknown action code
-    ActionCodeUnknown0x1 = 0x1,
+    /// Action code used for listing files on the BOSS server. May be a generic raw download?
+    ActionCodeFileList = 0x1,
     /// Action code for downloading data from the given URL, principally an @link NsData @endlink
     ActionCodeNsaDownload,
     /// Action code for uploading data to the given URL
@@ -51,6 +51,26 @@ enum ActionCode : u8 {
     ActionCodeVersionList
 };
 
+/// Flags which add additional information related to the console's access point to the data sent to the server
+enum ApInfoType : u8 {
+    /// Adds the "apgroup" parameter to the query
+    ApInfoTypeApGroup = 1 << 0,
+    /// Adds the "aparea" parameter to the query
+    ApInfoTypeApArea = 1 << 1,
+    /// Adds the "ap" parameter to the query
+    ApInfoTypeAp = 1 << 2,
+};
+
+/// Flags which add additional information related to the console's configuration to the data sent to the server
+enum CfgInfoType : u8 {
+    /// Adds the "c" parameter to the query
+    CfgInfoTypeCountry = 1 << 0,
+    /// Adds the "l" parameter to the query
+    CfgInfoTypeLanguage = 1 << 1,
+    /// Adds the "tm" parameter to the query
+    CfgInfoTypeTargetModel = 1 << 2,
+};
+
 // UNOFFICIAL: The official name of this struct is unknown
 struct HeaderField {
     char header[HTTP_HEADER_SIZE];
@@ -68,11 +88,11 @@ struct TaskActionConfig {
     u8 fsRootCA;
     /// If non-zero, enables the task client certificate to be read from the filesystem. May be a bool?
     u8 fsClientCert;
-    /// Unknown. Must be below 8 (not inclusive). Controls the "X-Boss-Apinfo" header?
+    /// See @link ApInfoType @endlink. Must be between 0 and 7 inclusively
     u8 apInfoType;
     /// This parameter is unknown. Must be between 0 and 6 inclusively. Controls what data is relevant? Matches with @link PropertyType @endlink 0x9
     u8 property0x9;
-    /// Unknown. Must be below 8 (not inclusive). Controls what system information is sent to the server?
+    /// See @link CfgInfoType @endlink. Must be between 0 and 7 inclusively
     u8 cfgInfoType;
     INSERT_PADDING_BYTES(2);
     /// This parameter is unknown. Matches with @link PropertyType @endlink 0x16
@@ -166,6 +186,20 @@ public:
     ~TaskAction();
 };
 CHECK_SIZE(TaskAction, 0x7D8);
+
+// UNOFFICIAL: The official name for FileListAction is unknown
+
+/// Task action used for retrieving the list of files on the BOSS server for a given task. May be a generic raw download?
+class FileListAction : public TaskAction {
+public:
+    /**
+     * @brief Initializes the task action
+     * @param url Target URL where the data will be downloaded from
+     * @param handle File handle where data will be stored
+     */
+    nn::Result Initialize(const char *url, nn::Handle handle);
+};
+CHECK_SIZE(FileListAction, 0x7D8);
 
 /// Task action used for downloading data from a given URL, principally an @link NsData @endlink
 class NsaDownloadAction : public TaskAction {
