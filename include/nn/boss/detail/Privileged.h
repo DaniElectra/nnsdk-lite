@@ -49,6 +49,13 @@ public:
     nn::Result SendProperty(PropertyType type, const u8 *buffer, u32 size);
 
     /**
+     * @brief Sends a property handle to the currently loaded session
+     * @param type Property type
+     * @param handle Input handle
+     */
+    nn::Result SendPropertyHandle(PropertyType type, nn::Handle handle);
+
+    /**
      * @brief Receives a property from the currently loaded session
      * @param type Property type
      * @param buffer Output buffer
@@ -56,13 +63,6 @@ public:
      * @param sizeRead Size written to the buffer
      */
     nn::Result ReceiveProperty(PropertyType type, u8 *buffer, u32 size, u32 *sizeRead);
-
-    /**
-     * @brief Sends a property handle to the currently loaded session
-     * @param type Property type
-     * @param handle Input handle
-     */
-    nn::Result SendPropertyHandle(PropertyType type, nn::Handle handle);
 
     /**
      * @brief Deletes the content for the specified NS Data ID
