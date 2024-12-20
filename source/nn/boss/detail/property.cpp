@@ -111,25 +111,25 @@ nn::Result SendUserTaskAction(TaskActionConfig *action) {
     SendPropertyUserInternal(PropertyType::ActionCode, reinterpret_cast<u8 *>(&action->code), 1);
     SendPropertyUserInternal(PropertyType::Url, reinterpret_cast<u8 *>(action->url), URL_SIZE);
     SendPropertyUserInternal(PropertyType::Unknown0x09, reinterpret_cast<u8 *>(&action->property0x9), 1);
-    switch(action->property0x9) {
-    case 0:
-        SendPropertyUserInternal(PropertyType::Unknown0x0A, action->actionData, 0x100);
-        break;
-    case 1:
-        SendPropertyUserInternal(PropertyType::Unknown0x0B, action->actionData, 0x200);
-        break;
-    case 2:
-    case 3:
-    case 4:
-        SendPropertyUserInternal(PropertyType::Handle, action->fileHandle);
-        break;
-    case 6:
-        SendPropertyUserInternal(PropertyType::Handle, action->fileHandle);
-    case 5:
-        SendPropertyUserInternal(PropertyType::DataStoreDownloadActionData, action->actionData, 0x200);
-        break;
-    default:
-        return {nn::Result::Level_Status, nn::Result::Summary_Internal, nn::Result::ModuleType_BOSS, static_cast<int>(ResultCode::Unexpect)};
+    switch (action->property0x9) {
+        case 0:
+            SendPropertyUserInternal(PropertyType::Unknown0x0A, action->actionData, 0x100);
+            break;
+        case 1:
+            SendPropertyUserInternal(PropertyType::Unknown0x0B, action->actionData, 0x200);
+            break;
+        case 2:
+        case 3:
+        case 4:
+            SendPropertyUserInternal(PropertyType::Handle, action->fileHandle);
+            break;
+        case 6:
+            SendPropertyUserInternal(PropertyType::Handle, action->fileHandle);
+        case 5:
+            SendPropertyUserInternal(PropertyType::DataStoreDownloadActionData, action->actionData, 0x200);
+            break;
+        default:
+            return {nn::Result::Level_Status, nn::Result::Summary_Internal, nn::Result::ModuleType_BOSS, static_cast<int>(ResultCode::Unexpect)};
     }
     SendPropertyUserInternal(PropertyType::HeaderFields, reinterpret_cast<u8 *>(action->headerFields), 0x360);
     SendPropertyUserInternal(PropertyType::Unknown0x16, reinterpret_cast<u8 *>(&action->property0x16), 4);
