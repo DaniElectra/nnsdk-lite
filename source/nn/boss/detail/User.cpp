@@ -71,6 +71,36 @@ nn::Result User::GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *out
     return res;
 }
 
+nn::Result User::SendProperty(PropertyType type, const u8 *buffer, u32 size) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x14, 2, 2, 0); // 0x140082
+    cmdbuf[1] = static_cast<u16>(type);
+    cmdbuf[2] = size;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 3, buffer, size);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result User::SendPropertyHandle(PropertyType type, nn::Handle handle) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x15, 1, 2, 0); // 0x150042
+    cmdbuf[1] = static_cast<u16>(type);
+    nn::os::ipc::WriteHandleCopyTranslate(cmdbuf, 2, 1);
+    cmdbuf[3] = handle.m_Handle;
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
 nn::Result User::ReceiveProperty(PropertyType type, u8 *buffer, u32 size, u32 *sizeRead) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x16, 2, 2, 0); // 0x160082

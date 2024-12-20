@@ -36,8 +36,12 @@ void WriteProcessIDTranslate(u32 *cmdbuf, u32 offset) {
     cmdbuf[offset] = 0x20;
 }
 
-void WriteHandleTranslate(u32 *cmdbuf, u32 offset, u32 numHandles) {
+void WriteHandleCopyTranslate(u32 *cmdbuf, u32 offset, u32 numHandles) {
     cmdbuf[offset] = (numHandles - 1) << 26;
+}
+
+void WriteHandleMoveTranslate(u32 *cmdbuf, u32 offset, u32 numHandles) {
+    cmdbuf[offset] = 0x10 | (numHandles - 1) << 26;
 }
 
 } // namespace ipc

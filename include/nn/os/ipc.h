@@ -97,12 +97,20 @@ void *ReadBuffer(u32 *cmdbuf, u32 offset);
 void WriteProcessIDTranslate(u32 *cmdbuf, u32 offset);
 
 /**
- * @brief Writes the translate parameter for one or multiple handles
+ * @brief Writes the translate parameter to copy one or multiple handles
  * @param cmdbuf Buffer where the translate parameter will be written into
  * @param offset Offset word where the translate parameter will be written into
- * @param numHandles Number of handles that will be used
+ * @param numHandles Number of handles that will be copied
  */
-void WriteHandleTranslate(u32 *cmdbuf, u32 offset, u32 numHandles);
+void WriteHandleCopyTranslate(u32 *cmdbuf, u32 offset, u32 numHandles);
+
+/**
+ * @brief Writes the translate parameter to move one or multiple handles
+ * @param cmdbuf Buffer where the translate parameter will be written into
+ * @param offset Offset word where the translate parameter will be written into
+ * @param numHandles Number of handles that will be moved
+ */
+void WriteHandleMoveTranslate(u32 *cmdbuf, u32 offset, u32 numHandles);
 
 } // namespace ipc
 

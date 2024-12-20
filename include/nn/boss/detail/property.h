@@ -1,8 +1,10 @@
 #pragma once
 
-#include "helpers.h"
 #include "nn/Result.h"
+#include "nn/boss/TaskAction.h"
 #include "nn/boss/TaskIdList.h"
+#include "nn/boss/TaskOption.h"
+#include "nn/boss/TaskPolicy.h"
 #include "nn/boss/TaskStatus.h"
 
 namespace nn {
@@ -10,6 +12,24 @@ namespace nn {
 namespace boss {
 
 namespace detail {
+
+/**
+ * @brief Sends the task action configuration data to the BOSS session
+ * @param action Task action config
+ */
+nn::Result SendUserTaskAction(TaskActionConfig *action);
+
+/**
+ * @brief Sends the task policy configuration data to the BOSS session
+ * @param policy Task policy config
+ */
+nn::Result SendUserTaskPolicy(TaskPolicyConfig *policy);
+
+/**
+ * @brief Sends the task option configuration data to the BOSS session
+ * @param option Task option config
+ */
+nn::Result SendUserTaskOption(TaskOptionConfig *option);
 
 /**
  * @brief Receives the list of task IDs from the application

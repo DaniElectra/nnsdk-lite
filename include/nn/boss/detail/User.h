@@ -47,13 +47,28 @@ public:
     nn::Result GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *outEntries, u16 startIndex, u32 startNsDataId, u16 *lastIndex);
 
     /**
+     * @brief Sends a property to the currently loaded session
+     * @param type Property type
+     * @param buffer Input buffer
+     * @param size Buffer size
+     */
+    nn::Result SendProperty(PropertyType type, const u8 *buffer, u32 size);
+
+    /**
+     * @brief Sends a property handle to the currently loaded session
+     * @param type Property type
+     * @param handle Input handle
+     */
+    nn::Result SendPropertyHandle(PropertyType type, nn::Handle handle);
+
+    /**
      * @brief Receives a property from the currently loaded session
      * @param type Property type
-     * @param buf Output buffer
+     * @param buffer Output buffer
      * @param size Buffer size
      * @param sizeRead Size written to the buffer
      */
-    nn::Result ReceiveProperty(PropertyType type, u8 *buf, u32 size, u32 *sizeRead);
+    nn::Result ReceiveProperty(PropertyType type, u8 *buffer, u32 size, u32 *sizeRead);
 
     /**
      * @brief Deletes the content for the specified NS Data ID
