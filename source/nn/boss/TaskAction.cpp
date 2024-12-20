@@ -7,25 +7,14 @@ namespace nn {
 
 namespace boss {
 
-nn::Result TaskActionBase::SetClientCert(u32 certId) {
-    u32 nextIndex = config.clientCertCount;
+nn::Result TaskActionBase::SetApInfoType(u8 infoType) {
+    config.apInfoType = infoType;
+    return RESULT_SUCCESS;
+}
 
-    // Check if the cert ID was already set
-    if (config.clientCertCount != 0) {
-        for (u32 i = 0; i < MAX_CLIENT_CERTS; i++) {
-            if (config.clientCerts[i] == certId) {
-                return RESULT_SUCCESS;
-            }
-        }
-    }
-
-    if (nextIndex < MAX_CLIENT_CERTS) {
-        config.clientCerts[nextIndex] = certId;
-        config.clientCertCount++;
-        return RESULT_SUCCESS;
-    }
-
-    return detail::ChangeBossRetCodeToResult(ResultCode::InvalidMaxClientCert);
+nn::Result TaskActionBase::SetCfgInfoType(u8 infoType) {
+    config.cfgInfoType = infoType;
+    return RESULT_SUCCESS;
 }
 
 nn::Result TaskActionBase::AddHeaderField(const char *header, const char *value) {
@@ -106,6 +95,27 @@ nn::Result TaskActionBase::SetRootCa(u32 certId) {
     }
 
     return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPolicy4);
+}
+
+nn::Result TaskActionBase::SetClientCert(u32 certId) {
+    u32 nextIndex = config.clientCertCount;
+
+    // Check if the cert ID was already set
+    if (config.clientCertCount != 0) {
+        for (u32 i = 0; i < MAX_CLIENT_CERTS; i++) {
+            if (config.clientCerts[i] == certId) {
+                return RESULT_SUCCESS;
+            }
+        }
+    }
+
+    if (nextIndex < MAX_CLIENT_CERTS) {
+        config.clientCerts[nextIndex] = certId;
+        config.clientCertCount++;
+        return RESULT_SUCCESS;
+    }
+
+    return detail::ChangeBossRetCodeToResult(ResultCode::InvalidMaxClientCert);
 }
 
 nn::Result FileListAction::Initialize(const char *url, nn::Handle handle) {

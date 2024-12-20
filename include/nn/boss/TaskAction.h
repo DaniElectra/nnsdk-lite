@@ -153,10 +153,16 @@ public:
     virtual ~TaskActionBase() = 0;
 
     /**
-     * @brief Sets a client certificate ID to be used by the task
-     * @param certId Client certificate ID to include
+     * @brief Sets the AP info type property
+     * @param infoType AP info type
      */
-    nn::Result SetClientCert(u32 certId);
+    nn::Result SetApInfoType(u8 infoType);
+
+    /**
+     * @brief Sets the config info type property
+     * @param infoType Config info type
+     */
+    nn::Result SetCfgInfoType(u8 infoType);
 
     /**
      * @brief Adds an additional header field to the task
@@ -170,6 +176,12 @@ public:
      * @param certId Root CA ID to include
      */
     nn::Result SetRootCa(u32 certId);
+
+    /**
+     * @brief Sets a client certificate ID to be used by the task
+     * @param certId Client certificate ID to include
+     */
+    nn::Result SetClientCert(u32 certId);
 };
 CHECK_SIZE(TaskActionBase, 0x7D8);
 CHECK_OFFSET(TaskActionBase, 0x4, config);
