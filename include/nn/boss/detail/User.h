@@ -35,6 +35,13 @@ public:
     nn::Result GetTaskIdList();
 
     /**
+     * @brief Internally retrieves the list of steps from a given task so that it can be accessed through @link ReceiveProperty @endlink
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     */
+    nn::Result GetStepIdList(const u8 *taskId, u32 taskIdSize);
+
+    /**
      * @brief Gets a list of NS Data IDs
      * @param filter Filter by content datatypes, see https://www.3dbrew.org/wiki/BOSSU:GetNsDataIdList#Filter
      * @param list Output array of NS Data IDs

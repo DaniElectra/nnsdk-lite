@@ -175,6 +175,13 @@ nn::Result ReceiveUserTaskIdList(TaskIdInfoList *list) {
     return s_PropertyResult;
 }
 
+nn::Result ReceiveUserStepIdList(StepIdInfoList *list) {
+    s_PropertyResult = RESULT_SUCCESS;
+    ReceivePropertyUserInternal(PropertyType::TotalSteps, reinterpret_cast<u8 *>(&list->stepCount), sizeof(list->stepCount));
+    ReceivePropertyUserInternal(PropertyType::StepIdList, reinterpret_cast<u8 *>(list->steps), sizeof(list->steps));
+    return s_PropertyResult;
+}
+
 nn::Result ReceiveUserTaskStatus(TaskStatusInfo *status) {
     s_PropertyResult = RESULT_SUCCESS;
     ReceivePropertyUserInternal(PropertyType::Unknown0x1D, reinterpret_cast<u8 *>(&status->property0x1D), sizeof(status->property0x1D));

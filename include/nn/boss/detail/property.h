@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nn/Result.h"
+#include "nn/boss/StepIdList.h"
 #include "nn/boss/TaskAction.h"
 #include "nn/boss/TaskIdList.h"
 #include "nn/boss/TaskOption.h"
@@ -36,6 +37,12 @@ nn::Result SendUserTaskOption(TaskOptionConfig *option);
  * @param list Output list of task IDs
  */
 nn::Result ReceiveUserTaskIdList(TaskIdInfoList *list);
+
+/**
+ * @brief Receives the list of steps from the previously specified task
+ * @param list Output list of step IDs
+ */
+nn::Result ReceiveUserStepIdList(StepIdInfoList *list);
 
 /**
  * @brief Receives the status of the currently loaded task

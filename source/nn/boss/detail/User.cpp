@@ -52,6 +52,20 @@ nn::Result User::GetTaskIdList() {
     return res;
 }
 
+nn::Result User::GetStepIdList(const u8 *taskId, u32 taskIdSize) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0xF, 1, 2, 0); // 0xF0042
+    cmdbuf[1] = taskIdSize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
 nn::Result User::GetNsDataIdList(u32 filter, u32 *list, u32 maxEntries, u16 *outEntries, u16 startIndex, u32 startNsDataId, u16 *lastIndex) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x10, 4, 2, 0); // 0x100102

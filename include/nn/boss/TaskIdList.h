@@ -49,7 +49,7 @@ CHECK_SIZE(TaskIdList, 0x40C);
 CHECK_OFFSET(TaskIdList, 0x4, infoList);
 
 /**
- * @brief Retrieves the list of task ID from the application
+ * @brief Retrieves the list of task IDs from the application
  * @param list Output list of task IDs
  */
 nn::Result GetTaskIdList(TaskIdList *list);

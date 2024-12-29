@@ -1,4 +1,5 @@
 #include "nn/boss/detail/task.h"
+#include <cstring>
 #include "nn/Result.h"
 #include "nn/boss/PropertyType.h"
 #include "nn/boss/ResultCode.h"
@@ -9,7 +10,22 @@ namespace nn {
 
 namespace boss {
 
+// UNOFFICIAL: Guess from context
+namespace {
+
+static constexpr auto s_FgOnlyTaskId = "FGONLYT";
+
+}
+
 namespace detail {
+
+bool CheckTaskIdOk(const char *taskId) {
+    return taskId != nullptr && taskId[0] != '\0';
+}
+
+bool IsFgOnlyTaskId(const char *taskId) {
+    return std::strncmp(taskId, s_FgOnlyTaskId, std::strlen(s_FgOnlyTaskId)) == 0;
+}
 
 nn::Result VerifyTaskActionConfig(TaskActionConfig *action) {
     ActionCode code = action->code;
