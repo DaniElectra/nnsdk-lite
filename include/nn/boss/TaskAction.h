@@ -5,8 +5,8 @@
 #include "helpers.h"
 #include "nn/Handle.h"
 #include "nn/Result.h"
-#include "nn/types.h"
 #include "nn/boss/common.h"
+#include "nn/types.h"
 
 namespace nn {
 
