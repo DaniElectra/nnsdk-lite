@@ -6,18 +6,11 @@
 #include "nn/Handle.h"
 #include "nn/Result.h"
 #include "nn/types.h"
+#include "nn/boss/common.h"
 
 namespace nn {
 
 namespace boss {
-
-constexpr int ACTION_DATA_SIZE = 0x200;
-constexpr int URL_SIZE = 0x200;
-constexpr int HTTP_HEADER_SIZE = 0x20;
-constexpr int HTTP_HEADER_VALUE_SIZE = 0x100;
-constexpr int MAX_HEADERS = 3;
-constexpr int MAX_ROOT_CAS = 3;
-constexpr int MAX_CLIENT_CERTS = 1;
 
 // UNOFFICIAL: The official name of these enums are unknown
 

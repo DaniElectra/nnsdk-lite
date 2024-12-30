@@ -33,6 +33,11 @@ NNSDK_NAKED nn::Result CloseHandle(Handle handle) {
         "bx lr");
 }
 
+NNSDK_NAKED nn::Result WaitSynchronization1(Handle handle, s64 nanoseconds) {
+    asm("svc 0x24 \n"
+        "bx lr");
+}
+
 NNSDK_NAKED nn::Result ConnectToPort(Handle *out, char *portName) {
     asm("str r0, [sp, #-0x4]! \n"
         "svc 0x2D \n"

@@ -6,6 +6,8 @@
 #include "nn/boss/NsDataHeaderInfo.h"
 #include "nn/boss/PropertyType.h"
 #include "nn/boss/TaskResultCode.h"
+#include "nn/boss/TaskServiceStatus.h"
+#include "nn/boss/TaskStateCode.h"
 #include "nn/fs/MediaType.h"
 
 namespace nn {
@@ -30,6 +32,31 @@ public:
      * @param unkOut Unknown output parameter
      */
     nn::Result GetStorageInfo(u32 *unkOut);
+
+    /**
+     * @brief Registers a given task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param taskOptionsConfigured Whether the @link TaskOption @endlink properties were sent
+     * @param stepId Task step ID
+     */
+    nn::Result RegisterTask(const u8 *taskId, u32 taskIdSize, u8 taskOptionsConfigured, u8 stepId);
+
+    /**
+     * @brief Unregisters a given task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param stepId Task step ID
+     */
+    nn::Result UnregisterTask(const u8 *taskId, u32 taskIdSize, u8 stepId);
+
+    /**
+     * @brief Reconfigures a given task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param stepId Task step ID
+     */
+    nn::Result ReconfigureTask(const u8 *taskId, u32 taskIdSize, u8 stepId);
 
     /// Internally retrieves the list of task IDs from the application so that it can be accessed through @link ReceiveProperty @endlink
     nn::Result GetTaskIdList();
@@ -76,6 +103,88 @@ public:
      * @param sizeRead Size written to the buffer
      */
     nn::Result ReceiveProperty(PropertyType type, u8 *buffer, u32 size, u32 *sizeRead);
+
+    /**
+     * @brief Updates the the task count @link PropertyType @endlink
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param count New count
+     */
+    nn::Result UpdateTaskCount(const u8 *taskId, u32 taskIdSize, u32 count);
+
+    /**
+     * @brief Gets the the task count @link PropertyType @endlink
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param count Output task count
+     */
+    nn::Result GetTaskCount(const u8 *taskId, u32 taskIdSize, u32 *count);
+
+    /**
+     * @brief Gets the the task service status
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param status Output task service status
+     */
+    nn::Result GetTaskServiceStatus(const u8 *taskId, u32 taskIdSize, TaskServiceStatus *status);
+
+    /**
+     * @brief Starts a given task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     */
+    nn::Result StartTask(const u8 *taskId, u32 taskIdSize);
+
+    /**
+     * @brief Starts a given immediate task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     */
+    nn::Result StartImmediateTask(const u8 *taskId, u32 taskIdSize);
+
+    /**
+     * @brief Cancels a given task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     */
+    nn::Result CancelTask(const u8 *taskId, u32 taskIdSize);
+
+    /**
+     * @brief Gets the finish event handle of the currently loaded task
+     * @param handle Output finish handle
+     */
+    nn::Result GetTaskFinishHandle(Handle *handle);
+
+    /**
+     * @brief Gets the the task state
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param stateCode Output task state code
+     * @param unk Unknown parameter
+     * @param count Output task count @link PropertyType @endlink
+     * @param currentStepId Output of the current step ID being run?
+     */
+    nn::Result GetTaskState(const u8 *taskId, u32 taskIdSize, TaskStateCode *stateCode, bool unk, u32 *count, u8 *currentStepId);
+
+    /**
+     * @brief Gets the the task result
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param resultCode Output task result code
+     * @param count Output task count @link PropertyType @endlink ?
+     * @param currentStepId Output of the current step ID being run?
+     */
+    nn::Result GetTaskResult(const u8 *taskId, u32 taskIdSize, TaskResultCode *resultCode, u32 *count, u8 *currentStepId);
+
+    /**
+     * @brief Internally retrieves all properties in relation to the status of the task, so that they can be stored on the @link TaskStatus @endlink
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param unk Unknown parameter
+     * @param currentStepId Output of the current step ID being inspected?
+     * @param stepId Task step ID to get the status from?
+     */
+    nn::Result GetTaskStatus(const u8 *taskId, u32 taskIdSize, bool unk, u8 *currentStepId, u8 stepId);
 
     /**
      * @brief Deletes the content for the specified NS Data ID
@@ -135,6 +244,15 @@ public:
 
     /// Unregisters the current storage being used
     nn::Result UnregisterStorage();
+
+    /**
+     * @brief Registers a given immediate task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param taskOptionsConfigured Whether the @link TaskOption @endlink properties were sent
+     * @param stepId Task step ID
+     */
+    nn::Result RegisterImmediateTask(const u8 *taskId, u32 taskIdSize, u8 taskOptionsConfigured, u8 stepId);
 };
 CHECK_SIZE(User, 0x4);
 CHECK_OFFSET(User, 0x0, session);

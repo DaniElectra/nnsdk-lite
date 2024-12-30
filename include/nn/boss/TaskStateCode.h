@@ -6,10 +6,9 @@ namespace nn {
 
 namespace boss {
 
-// TODO - Add more result codes
-enum class TaskResultCode : u8 {
-    Unknown0x02 = 2,
-    Unknown0x03
+// TODO - Add more state codes
+enum class TaskStateCode : u8 {
+    Unknown0x09 = 9
 };
 
 } // namespace boss

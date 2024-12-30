@@ -3,13 +3,11 @@
 #include <cstring>
 #include "helpers.h"
 #include "nn/Result.h"
+#include "nn/boss/common.h"
+
 namespace nn {
 
 namespace boss {
-
-constexpr int QUERY_NAME_SIZE = 0xF;
-constexpr int QUERY_VALUE_SIZE = 0x10;
-constexpr int MAX_QUERY_FIELDS = 3;
 
 // UNOFFICIAL: The official name of all structs and classes in this header are unknown
 

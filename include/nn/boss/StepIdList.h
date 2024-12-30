@@ -2,6 +2,7 @@
 
 #include "helpers.h"
 #include "nn/Result.h"
+#include "nn/boss/common.h"
 #include "nn/types.h"
 
 namespace nn {
@@ -16,7 +17,7 @@ struct StepIdInfoList {
     u16 stepCount;
     INSERT_PADDING_BYTES(2);
     /// List of step IDs. TODO - Is this actually a u8?
-    u8 steps[0x80];
+    u8 steps[STEP_ID_LIST_SIZE];
 };
 CHECK_SIZE(StepIdInfoList, 0x84);
 CHECK_OFFSET(StepIdInfoList, 0x0, stepCount);

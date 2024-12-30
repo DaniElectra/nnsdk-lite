@@ -39,6 +39,13 @@ nn::Result ArbitrateAddress(Handle arbiter, u32 addr, nn::os::ArbitrationType ar
 nn::Result CloseHandle(Handle handle);
 
 /**
+ * @brief Waits for the synchronization of a handle
+ * @param handle Handle to wait for
+ * @param nanoseconds Timeout in nanoseconds
+ */
+nn::Result WaitSynchronization1(Handle handle, u64 nanoseconds);
+
+/**
  * @brief Connects to the specified port
  * @param handle Output handle for connecting to the port
  * @param portName Name of the port to connect

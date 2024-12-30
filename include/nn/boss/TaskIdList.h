@@ -4,12 +4,11 @@
 #include "helpers.h"
 #include "nn/Result.h"
 #include "nn/types.h"
+#include "nn/boss/common.h"
+
 namespace nn {
 
 namespace boss {
-
-constexpr int TASK_ID_SIZE = 8;
-constexpr int TASK_ID_LIST_SIZE = 128;
 
 /// List of task IDs registered by the application
 struct TaskIdInfoList {

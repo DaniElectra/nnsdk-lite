@@ -1,6 +1,7 @@
 #include "nn/boss/detail/Privileged.h"
 #include "nn/Result.h"
 #include "nn/boss/PropertyType.h"
+#include "nn/boss/TaskServiceStatus.h"
 #include "nn/os/ipc.h"
 #include "nn/svc/svc.h"
 
@@ -17,6 +18,52 @@ nn::Result Privileged::GetStorageInfo(u32 *unkOut) {
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *unkOut = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::RegisterTask(const u8 *taskId, u32 taskIdSize, u8 taskOptionsConfigured, u8 stepId) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0xB, 3, 2, 0); // 0xB00C2
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = taskOptionsConfigured;
+    cmdbuf[3] = stepId;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 4, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::UnregisterTask(const u8 *taskId, u32 taskIdSize, u8 stepId) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0xC, 2, 2, 0); // 0xC0082
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = stepId;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 3, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::ReconfigureTask(const u8 *taskId, u32 taskIdSize, u8 stepId) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0xD, 2, 2, 0); // 0xD0082
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = stepId;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 3, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
         res = RAW_RESULT(cmdbuf[1]);
     }
 
@@ -108,6 +155,158 @@ nn::Result Privileged::ReceiveProperty(PropertyType type, u8 *buffer, u32 size, 
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *sizeRead = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::UpdateTaskCount(const u8 *taskId, u32 taskIdSize, u32 count) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x18, 2, 2, 0); // 0x180082
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = count;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::GetTaskCount(const u8 *taskId, u32 taskIdSize, u32 *count) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x1A, 1, 2, 0); // 0x1A0042
+    cmdbuf[1] = taskIdSize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *count = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::GetTaskServiceStatus(const u8 *taskId, u32 taskIdSize, TaskServiceStatus *status) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x1B, 1, 2, 0); // 0x1B0042
+    cmdbuf[1] = taskIdSize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *status = static_cast<TaskServiceStatus>(cmdbuf[2]);
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::StartTask(const u8 *taskId, u32 taskIdSize) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x1C, 1, 2, 0); // 0x1C0042
+    cmdbuf[1] = taskIdSize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::StartImmediateTask(const u8 *taskId, u32 taskIdSize) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x1D, 1, 2, 0); // 0x1D0042
+    cmdbuf[1] = taskIdSize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::CancelTask(const u8 *taskId, u32 taskIdSize) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x1E, 1, 2, 0); // 0x1E0042
+    cmdbuf[1] = taskIdSize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::GetTaskFinishHandle(Handle *handle) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x1F, 0, 0, 0); // 0x1F0000
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        handle->m_Handle = cmdbuf[2];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::GetTaskState(const u8 *taskId, u32 taskIdSize, TaskStateCode *stateCode, bool unk, u32 *count, u8 *currentStepId) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x20, 2, 2, 0); // 0x200082
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = unk;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 3, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *stateCode = static_cast<TaskStateCode>(cmdbuf[2]);
+        *count = cmdbuf[3];
+        *currentStepId = cmdbuf[4];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::GetTaskResult(const u8 *taskId, u32 taskIdSize, TaskResultCode *resultCode, u32 *count, u8 *currentStepId) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x21, 1, 2, 0); // 0x210042
+    cmdbuf[1] = taskIdSize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 2, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *resultCode = static_cast<TaskResultCode>(cmdbuf[2]);
+        *count = cmdbuf[3];
+        *currentStepId = cmdbuf[4];
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::GetTaskStatus(const u8 *taskId, u32 taskIdSize, bool unk, u8 *currentStepId, u8 stepId) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x23, 3, 2, 0); // 0x2300C2
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = unk;
+    cmdbuf[3] = stepId;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 4, taskId, taskIdSize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        *currentStepId = cmdbuf[2];
         res = RAW_RESULT(cmdbuf[1]);
     }
 
@@ -224,6 +423,22 @@ nn::Result Privileged::RegisterStorageEntry(u64 extDataId, u32 unk1, u16 unk2, n
 nn::Result Privileged::UnregisterStorage() {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x30, 0, 0, 0); // 0x300000
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
+nn::Result Privileged::RegisterImmediateTask(const u8 *taskId, u32 taskIdSize, u8 taskOptionsConfigured, u8 stepId) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x35, 3, 2, 0); // 0x3500C2
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = taskOptionsConfigured;
+    cmdbuf[3] = stepId;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 4, taskId, taskIdSize);
 
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
