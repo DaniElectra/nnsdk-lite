@@ -5,6 +5,7 @@
 #include "helpers.h"
 #include "nn/Handle.h"
 #include "nn/Result.h"
+#include "nn/boss/PropertyType.h"
 #include "nn/boss/common.h"
 #include "nn/types.h"
 
@@ -144,6 +145,14 @@ public:
 
     // vtable +0x0
     virtual ~TaskActionBase() = 0;
+
+    /**
+     * @brief Sets a property of the task action
+     * @param type Property type
+     * @param buf Pointer to the property data
+     * @param size Size of the property data
+     */
+    nn::Result SetProperty(PropertyType type, const void *buf, u32 size);
 
     /**
      * @brief Sets the AP info type property

@@ -1,11 +1,186 @@
 #include "nn/boss/TaskAction.h"
 #include "nn/Result.h"
+#include "nn/boss/PropertyType.h"
 #include "nn/boss/ResultCode.h"
+#include "nn/boss/common.h"
 #include "nn/boss/detail/detail.h"
 
 namespace nn {
 
 namespace boss {
+
+nn::Result TaskActionBase::SetProperty(PropertyType type, const void *buf, u32 size) {
+    void *dst;
+    u32 diff;
+
+    if (buf == nullptr) {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPropertyValue);
+    }
+
+    switch (type) {
+        case PropertyType::Url:
+            // Prevent overflow
+            if (size > URL_SIZE) {
+                size = URL_SIZE;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(config.url) + size, URL_SIZE - size);
+            std::memset(reinterpret_cast<u8 *>(config.url) + size, 0, URL_SIZE - size);
+
+            dst = config.url;
+            break;
+        case PropertyType::HeaderFields:
+            // Prevent overflow
+            if (size > 0x360) {
+                size = 0x360;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.headerFields) + size, 0x360 - size);
+            std::memset(reinterpret_cast<u8 *>(&config.headerFields) + size, 0, 0x360 - size);
+
+            dst = config.headerFields;
+            break;
+        case PropertyType::ClientCerts:
+            // Prevent overflow
+            if (size > 4) {
+                size = 4;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(config.clientCerts) + size, 4 - size);
+            std::memset(reinterpret_cast<u8 *>(config.clientCerts) + size, 0, 4 - size);
+
+            dst = config.clientCerts;
+            break;
+        case PropertyType::RootCAs:
+            // Prevent overflow
+            if (size > 0xC) {
+                size = 0xC;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(config.rootCAs) + size, 0xC - size);
+            std::memset(reinterpret_cast<u8 *>(config.rootCAs) + size, 0, 0xC - size);
+
+            dst = config.rootCAs;
+            break;
+        case PropertyType::FSClientCert:
+            // Prevent overflow
+            if (size > 1) {
+                size = 1;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.fsClientCert) + size, size == 0 ? 1 : 0);
+            std::memset(reinterpret_cast<u8 *>(&config.fsClientCert) + size, 0, size == 0 ? 1 : 0);
+
+            dst = &config.fsClientCert;
+            break;
+        case PropertyType::FSRootCA:
+            // Prevent overflow
+            if (size > 1) {
+                size = 1;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.fsRootCA) + size, size == 0 ? 1 : 0);
+            std::memset(reinterpret_cast<u8 *>(&config.fsRootCA) + size, 0, size == 0 ? 1 : 0);
+
+            dst = &config.fsRootCA;
+            break;
+        case PropertyType::ApInfoType:
+            // Prevent overflow
+            if (size > 1) {
+                size = 1;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.apInfoType) + size, size == 0 ? 1 : 0);
+            std::memset(reinterpret_cast<u8 *>(&config.apInfoType) + size, 0, size == 0 ? 1 : 0);
+
+            dst = &config.apInfoType;
+            break;
+        case PropertyType::RootCaCount:
+            // Prevent overflow
+            if (size > 4) {
+                size = 4;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.rootCaCount) + size, 4 - size);
+            std::memset(reinterpret_cast<u8 *>(&config.rootCaCount) + size, 0, 4 - size);
+
+            dst = &config.rootCaCount;
+            break;
+        case PropertyType::ClientCertCount:
+            // Prevent overflow
+            if (size > 4) {
+                size = 4;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.clientCertCount) + size, 4 - size);
+            std::memset(reinterpret_cast<u8 *>(&config.clientCertCount) + size, 0, 4 - size);
+
+            dst = &config.rootCaCount;
+            break;
+        case PropertyType::Unknown0x15:
+            // Prevent overflow
+            if (size > 0x40) {
+                size = 0x40;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(config.property0x15) + size, 0x40 - size);
+            std::memset(reinterpret_cast<u8 *>(config.property0x15) + size, 0, 0x40 - size);
+
+            dst = config.property0x15;
+            break;
+        case PropertyType::Unknown0x16:
+            // Prevent overflow
+            if (size > 4) {
+                size = 4;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.property0x16) + size, 4 - size);
+            std::memset(reinterpret_cast<u8 *>(&config.property0x16) + size, 0, 4 - size);
+
+            dst = &config.property0x16;
+            break;
+        case PropertyType::CfgInfoType:
+            // Prevent overflow
+            if (size > 1) {
+                size = 1;
+            }
+
+            // Clear the bytes that won't be set
+
+            // memclr(reinterpret_cast<u8 *>(&config.cfgInfoType) + size, size == 0 ? 1 : 0);
+            std::memset(reinterpret_cast<u8 *>(&config.cfgInfoType) + size, 0, size == 0 ? 1 : 0);
+
+            dst = &config.cfgInfoType;
+            break;
+        default:
+            return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPropertyType);
+    }
+
+    std::memcpy(dst, buf, size);
+    return RESULT_SUCCESS;
+}
 
 nn::Result TaskActionBase::SetApInfoType(u8 infoType) {
     config.apInfoType = infoType;
