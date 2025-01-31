@@ -105,7 +105,7 @@ public:
     nn::Result ReceiveProperty(PropertyType type, u8 *buffer, u32 size, u32 *sizeRead);
 
     /**
-     * @brief Updates the the task count @link PropertyType @endlink
+     * @brief Updates the task count @link PropertyType @endlink
      * @param taskId Task ID
      * @param taskIdSize Size of task ID, including @c NULL terminator
      * @param count New count
@@ -113,7 +113,7 @@ public:
     nn::Result UpdateTaskCount(const u8 *taskId, u32 taskIdSize, u32 count);
 
     /**
-     * @brief Gets the the task count @link PropertyType @endlink
+     * @brief Gets the task count @link PropertyType @endlink
      * @param taskId Task ID
      * @param taskIdSize Size of task ID, including @c NULL terminator
      * @param count Output task count
@@ -121,7 +121,7 @@ public:
     nn::Result GetTaskCount(const u8 *taskId, u32 taskIdSize, u32 *count);
 
     /**
-     * @brief Gets the the task service status
+     * @brief Gets the task service status
      * @param taskId Task ID
      * @param taskIdSize Size of task ID, including @c NULL terminator
      * @param status Output task service status
@@ -156,7 +156,7 @@ public:
     nn::Result GetTaskFinishHandle(Handle *handle);
 
     /**
-     * @brief Gets the the task state
+     * @brief Gets the task state
      * @param taskId Task ID
      * @param taskIdSize Size of task ID, including @c NULL terminator
      * @param stateCode Output task state code
@@ -167,7 +167,7 @@ public:
     nn::Result GetTaskState(const u8 *taskId, u32 taskIdSize, TaskStateCode *stateCode, bool unk, u32 *count, u8 *currentStepId);
 
     /**
-     * @brief Gets the the task result
+     * @brief Gets the task result
      * @param taskId Task ID
      * @param taskIdSize Size of task ID, including @c NULL terminator
      * @param resultCode Output task result code
@@ -253,6 +253,15 @@ public:
      * @param stepId Task step ID
      */
     nn::Result RegisterImmediateTask(const u8 *taskId, u32 taskIdSize, u8 taskOptionsConfigured, u8 stepId);
+
+    /**
+     * @brief Sets a query for the task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param query Task query
+     * @param querySize Size of the @c query parameter
+     */
+    nn::Result SetTaskQuery(const u8 *taskId, u32 taskIdSize, const u8 *query, u32 querySize);
 };
 CHECK_SIZE(User, 0x4);
 CHECK_OFFSET(User, 0x0, session);

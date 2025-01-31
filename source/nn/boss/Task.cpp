@@ -346,6 +346,35 @@ nn::Result Task::GetStateDetail(TaskStatus *status, bool unk, u8 *currentStepId,
     return res;
 }
 
+nn::Result Task::SetQuery(TaskQuery *query) {
+    if (!detail::CheckTaskIdOk(taskId)) {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidTaskId);
+    }
+
+    if (query == nullptr) {
+        return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPointer);
+    }
+
+    u32 taskIdLen = std::strlen(taskId);
+
+    detail::User *userInstance;
+    detail::Privileged *privilegedInstance;
+
+    // Try with the privileged instance
+    nn::Result res = detail::GetPrivilegedIpcInstance(privilegedInstance);
+    if (res) {
+        res = privilegedInstance->SetTaskQuery(reinterpret_cast<const u8 *>(taskId), taskIdLen + 1, reinterpret_cast<const u8 *>(&query->config), sizeof(TaskQueryConfig));
+    } else {
+        // If it isn't available, try with the user instance
+        res = detail::GetUserIpcInstance(userInstance);
+        if (res) {
+            res = userInstance->SetTaskQuery(reinterpret_cast<const u8 *>(taskId), taskIdLen + 1, reinterpret_cast<const u8 *>(&query->config), sizeof(TaskQueryConfig));
+        }
+    }
+
+    return res;
+}
+
 nn::Result RegisterTask(Task *task, TaskPolicy *policy, TaskAction *action, TaskOption *option, u8 stepId) {
     if (task == nullptr) {
         return detail::ChangeBossRetCodeToResult(ResultCode::InvalidTaskId);

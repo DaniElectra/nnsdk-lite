@@ -5,6 +5,7 @@
 #include "nn/boss/TaskAction.h"
 #include "nn/boss/TaskOption.h"
 #include "nn/boss/TaskPolicy.h"
+#include "nn/boss/TaskQuery.h"
 #include "nn/boss/TaskResultCode.h"
 #include "nn/boss/TaskServiceStatus.h"
 #include "nn/boss/TaskStateCode.h"
@@ -86,6 +87,13 @@ public:
      * @param stepId Task step ID to get the details from?
      */
     nn::Result GetStateDetail(TaskStatus *status, bool unk, u8 *currentStepId, u8 stepId);
+
+    /**
+     * @brief Sets a query for the task
+     * @param query Query to be used
+     * @remark UNOFFICIAL: The function name or the parameter types may be incorrect
+     */
+    nn::Result SetQuery(TaskQuery *query);
 };
 CHECK_SIZE(Task, 0x14);
 CHECK_OFFSET(Task, 0xC, taskId);

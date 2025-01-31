@@ -464,6 +464,22 @@ nn::Result User::RegisterImmediateTask(const u8 *taskId, u32 taskIdSize, u8 task
     return res;
 }
 
+nn::Result User::SetTaskQuery(const u8 *taskId, u32 taskIdSize, const u8 *query, u32 querySize) {
+    u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
+    nn::os::ipc::WriteHeader(cmdbuf, 0x36, 2, 4, 0); // 0x360084
+    cmdbuf[1] = taskIdSize;
+    cmdbuf[2] = querySize;
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 3, taskId, taskIdSize);
+    nn::os::ipc::WriteMappedBufferRead(cmdbuf, 5, query, querySize);
+
+    nn::Result res = nn::svc::SendSyncRequest(session);
+    if (res) {
+        res = RAW_RESULT(cmdbuf[1]);
+    }
+
+    return res;
+}
+
 } // namespace detail
 
 } // namespace boss

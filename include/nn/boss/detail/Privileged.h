@@ -249,6 +249,15 @@ public:
     nn::Result RegisterImmediateTask(const u8 *taskId, u32 taskIdSize, u8 taskOptionsConfigured, u8 stepId);
 
     /**
+     * @brief Sets a query for the task
+     * @param taskId Task ID
+     * @param taskIdSize Size of task ID, including @c NULL terminator
+     * @param query Task query
+     * @param querySize Size of the @c query parameter
+     */
+    nn::Result SetTaskQuery(const u8 *taskId, u32 taskIdSize, const u8 *query, u32 querySize);
+
+    /**
      * @brief Deletes the content for the specified NS Data ID with privileged permissions
      * @param titleId Title ID that the NS Data ID belongs to
      * @param nsDataId NS Data ID
