@@ -106,6 +106,32 @@ nn::Result ReceivePropertyUserInternal(PropertyType type, u8 *buf, u32 size) {
     return res;
 }
 
+/**
+ * @brief Receives a privileged property from the currently loaded session
+ * @remark If the buffer size doesn't match with the property size, this function will return "ResultCode::IpcPropertySizeError"
+ * @param type Property type
+ * @param buf Output buffer
+ * @param size Buffer size
+ */
+nn::Result ReceivePropertyPrivilegedInternal(PropertyType type, u8 *buf, u32 size) {
+    nn::Result res;
+    detail::Privileged *privilegedInstance;
+    u32 sizeRead;
+
+    // Try with the privileged instance. NOTE: This function is inlined
+    res = detail::GetPrivilegedIpcInstance(privilegedInstance);
+    if (res) {
+        res = privilegedInstance->ReceiveProperty(type, buf, size, &sizeRead);
+    }
+
+    if (res && size != sizeRead) {
+        res = detail::ChangeBossRetCodeToResult(ResultCode::IpcPropertySizeError);
+    }
+
+    s_PropertyResult = res;
+    return res;
+}
+
 nn::Result SendUserTaskAction(TaskActionConfig *action) {
     s_PropertyResult = RESULT_SUCCESS;
     SendPropertyUserInternal(PropertyType::ActionCode, reinterpret_cast<u8 *>(&action->code), 1);
@@ -203,6 +229,13 @@ nn::Result ReceiveUserTaskStatus(TaskStatusInfo *status) {
     ReceivePropertyUserInternal(PropertyType::Unknown0x22, reinterpret_cast<u8 *>(&status->property0x22), sizeof(status->property0x22));
     ReceivePropertyUserInternal(PropertyType::Unknown0x24, reinterpret_cast<u8 *>(&status->property0x24), sizeof(status->property0x24));
     ReceivePropertyUserInternal(PropertyType::Unknown0x2F, reinterpret_cast<u8 *>(status->property0x2F), sizeof(status->property0x2F));
+    return s_PropertyResult;
+}
+
+nn::Result ReceivePrivilegedAppIdList(AppIdInfoList *list) {
+    s_PropertyResult = RESULT_SUCCESS;
+    ReceivePropertyPrivilegedInternal(PropertyType::TotalApps, reinterpret_cast<u8 *>(&list->appIdCount), sizeof(list->appIdCount));
+    ReceivePropertyPrivilegedInternal(PropertyType::AppIdList, reinterpret_cast<u8 *>(list->apps), sizeof(list->apps));
     return s_PropertyResult;
 }
 

@@ -24,6 +24,8 @@ constexpr int MAX_QUERY_FIELDS = 3;
 constexpr u8 STEP_ID_CURRENT = 0x80;
 constexpr int STEP_ID_LIST_SIZE = 0x80;
 
+constexpr int APP_ID_LIST_SIZE = 0x80;
+
 } // namespace boss
 
 } // namespace nn

@@ -257,6 +257,9 @@ public:
      */
     nn::Result SetTaskQuery(const u8 *taskId, u32 taskIdSize, const u8 *query, u32 querySize);
 
+    /// Internally retrieves the list of applications that are registered on BOSS so that it can be accessed through @link ReceiveProperty @endlink
+    nn::Result GetAppIdList();
+
     /**
      * @brief Deletes the content for the specified NS Data ID with privileged permissions
      * @param titleId Title ID that the NS Data ID belongs to

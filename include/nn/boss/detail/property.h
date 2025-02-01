@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nn/Result.h"
+#include "nn/boss/AppIdList.h"
 #include "nn/boss/StepIdList.h"
 #include "nn/boss/TaskAction.h"
 #include "nn/boss/TaskIdList.h"
@@ -49,6 +50,12 @@ nn::Result ReceiveUserStepIdList(StepIdInfoList *list);
  * @param status Output task status
  */
 nn::Result ReceiveUserTaskStatus(TaskStatusInfo *status);
+
+/**
+ * @brief Receives the list of applications that are registered in BOSS
+ * @param list Output list of app IDs
+ */
+nn::Result ReceivePrivilegedAppIdList(AppIdInfoList *list);
 
 } // namespace detail
 
