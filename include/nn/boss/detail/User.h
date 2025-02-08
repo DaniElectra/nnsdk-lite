@@ -208,9 +208,9 @@ public:
      * @param buffer Output buffer
      * @param size Buffer size
      * @param sizeRead Size written to the buffer
-     * @param unknownOut Unknown output
+     * @param version Output NS Data version
      */
-    nn::Result ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *unknownOut);
+    nn::Result ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *version);
 
     /**
      * @brief Sets whether the content for the specified NS Data ID has been read

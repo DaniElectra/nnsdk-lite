@@ -342,7 +342,7 @@ nn::Result Privileged::GetNsDataHeaderInfo(u32 nsDataId, HeaderInfoType type, u8
     return res;
 }
 
-nn::Result Privileged::ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *unknownOut) {
+nn::Result Privileged::ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *version) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x28, 4, 2, 0); // 0x280102
     cmdbuf[1] = nsDataId;
@@ -354,7 +354,7 @@ nn::Result Privileged::ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *sizeRead = cmdbuf[2];
-        *unknownOut = cmdbuf[3];
+        *version = cmdbuf[3];
         res = RAW_RESULT(cmdbuf[1]);
     }
 
@@ -509,7 +509,7 @@ nn::Result Privileged::GetNsDataHeaderInfoPrivileged(u64 titleId, u32 nsDataId, 
     return res;
 }
 
-nn::Result Privileged::ReadNsDataPrivileged(u64 titleId, u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *unknownOut) {
+nn::Result Privileged::ReadNsDataPrivileged(u64 titleId, u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *version) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x417, 6, 2, 0); // 0x4170182
     cmdbuf[1] = titleId;
@@ -523,7 +523,7 @@ nn::Result Privileged::ReadNsDataPrivileged(u64 titleId, u32 nsDataId, s64 offse
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *sizeRead = cmdbuf[2];
-        *unknownOut = cmdbuf[3];
+        *version = cmdbuf[3];
         res = RAW_RESULT(cmdbuf[1]);
     }
 

@@ -20,7 +20,7 @@ public:
     INSERT_UNKNOWN_BYTES(3);
     u32 nsDataId;
     u32 payloadSize;
-    u32 unknownOut;
+    u32 version;
     u64 titleId;
     s64 offset;
 
@@ -28,7 +28,7 @@ public:
         privilegedAccess = false;
         nsDataId = 0;
         payloadSize = 0;
-        unknownOut = 0;
+        version = 0;
         titleId = 0xA010; // TODO - What is this?
         offset = 0;
     }
@@ -82,7 +82,7 @@ CHECK_SIZE(NsData, 0x28);
 CHECK_OFFSET(NsData, 0x08, privilegedAccess);
 CHECK_OFFSET(NsData, 0x0C, nsDataId);
 CHECK_OFFSET(NsData, 0x10, payloadSize);
-CHECK_OFFSET(NsData, 0x14, unknownOut);
+CHECK_OFFSET(NsData, 0x14, version);
 CHECK_OFFSET(NsData, 0x18, titleId);
 CHECK_OFFSET(NsData, 0x20, offset);
 

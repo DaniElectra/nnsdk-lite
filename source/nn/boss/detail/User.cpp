@@ -358,7 +358,7 @@ nn::Result User::GetNsDataHeaderInfo(u32 nsDataId, HeaderInfoType type, u8 *buff
     return res;
 }
 
-nn::Result User::ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *unknownOut) {
+nn::Result User::ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 *sizeRead, u32 *version) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x28, 4, 2, 0); // 0x280102
     cmdbuf[1] = nsDataId;
@@ -370,7 +370,7 @@ nn::Result User::ReadNsData(u32 nsDataId, s64 offset, u8 *buffer, u32 size, u32 
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
         *sizeRead = cmdbuf[2];
-        *unknownOut = cmdbuf[3];
+        *version = cmdbuf[3];
         res = RAW_RESULT(cmdbuf[1]);
     }
 

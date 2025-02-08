@@ -111,20 +111,17 @@ s32 NsData::ReadData(u8 *buffer, u32 size) {
             return -3;
         }
 
-        u32 unkOut;
-        res = privilegedInstance->ReadNsDataPrivileged(titleId, nsDataId, offset, buffer, size, &sizeRead, &unkOut);
+        u32 outputVersion;
+        res = privilegedInstance->ReadNsDataPrivileged(titleId, nsDataId, offset, buffer, size, &sizeRead, &outputVersion);
         if (res.Failed()) {
             return -2;
         }
 
-        // TODO - What is the unknown output?
-        u32 thisUnknownOut = unknownOut;
-        if (unknownOut == 0) {
-            unknownOut = unkOut;
-            thisUnknownOut = unkOut;
+        if (version == 0) {
+            version = outputVersion;
         }
 
-        if (thisUnknownOut == unkOut) {
+        if (version == outputVersion) {
             offset += sizeRead;
             return sizeRead;
         }
@@ -136,20 +133,17 @@ s32 NsData::ReadData(u8 *buffer, u32 size) {
 
     // If privileged access is disabled, try the privileged instance without privileged access
     if (res) {
-        u32 unkOut;
-        res = privilegedInstance->ReadNsData(nsDataId, offset, buffer, size, &sizeRead, &unkOut);
+        u32 outputVersion;
+        res = privilegedInstance->ReadNsData(nsDataId, offset, buffer, size, &sizeRead, &outputVersion);
         if (res.Failed()) {
             return -2;
         }
 
-        // TODO - What is the unknown output?
-        u32 thisUnknownOut = unknownOut;
-        if (unknownOut == 0) {
-            unknownOut = unkOut;
-            thisUnknownOut = unkOut;
+        if (version == 0) {
+            version = outputVersion;
         }
 
-        if (thisUnknownOut == unkOut) {
+        if (version == outputVersion) {
             offset += sizeRead;
             return sizeRead;
         }
@@ -160,20 +154,17 @@ s32 NsData::ReadData(u8 *buffer, u32 size) {
     // Finally, try with the user instance
     res = detail::GetUserIpcInstance(userInstance);
     if (res) {
-        u32 unkOut;
-        res = userInstance->ReadNsData(nsDataId, offset, buffer, size, &sizeRead, &unkOut);
+        u32 outputVersion;
+        res = userInstance->ReadNsData(nsDataId, offset, buffer, size, &sizeRead, &outputVersion);
         if (res.Failed()) {
             return -2;
         }
 
-        // TODO - What is the unknown output?
-        u32 thisUnknownOut = unknownOut;
-        if (unknownOut == 0) {
-            unknownOut = unkOut;
-            thisUnknownOut = unkOut;
+        if (version == 0) {
+            version = outputVersion;
         }
 
-        if (thisUnknownOut == unkOut) {
+        if (version == outputVersion) {
             offset += sizeRead;
             return sizeRead;
         }
