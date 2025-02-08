@@ -210,16 +210,17 @@ nn::Result ReceiveUserStepIdList(StepIdInfoList *list) {
 
 nn::Result ReceiveUserTaskStatus(TaskStatusInfo *status) {
     s_PropertyResult = RESULT_SUCCESS;
-    ReceivePropertyUserInternal(PropertyType::Unknown0x1D, reinterpret_cast<u8 *>(&status->property0x1D), sizeof(status->property0x1D));
+    ReceivePropertyUserInternal(PropertyType::StateCode, reinterpret_cast<u8 *>(&status->stateCode), sizeof(status->stateCode));
     ReceivePropertyUserInternal(PropertyType::Unknown0x1E, reinterpret_cast<u8 *>(&status->property0x1E), sizeof(status->property0x1E));
     ReceivePropertyUserInternal(PropertyType::Unknown0x1F, reinterpret_cast<u8 *>(&status->property0x1F), sizeof(status->property0x1F));
-    ReceivePropertyUserInternal(PropertyType::Unknown0x20, reinterpret_cast<u8 *>(&status->property0x20), sizeof(status->property0x20));
-    ReceivePropertyUserInternal(PropertyType::Unknown0x21, reinterpret_cast<u8 *>(&status->property0x21), sizeof(status->property0x21));
-    ReceivePropertyUserInternal(PropertyType::Unknown0x23, reinterpret_cast<u8 *>(&status->property0x23), sizeof(status->property0x23));
+    ReceivePropertyUserInternal(PropertyType::TaskResultCode, reinterpret_cast<u8 *>(&status->result), sizeof(status->result));
+    ReceivePropertyUserInternal(PropertyType::ServiceStatus, reinterpret_cast<u8 *>(&status->serviceStatus), sizeof(status->serviceStatus));
+    ReceivePropertyUserInternal(PropertyType::CommErrorCode, reinterpret_cast<u8 *>(&status->commErrorCode), sizeof(status->commErrorCode));
     ReceivePropertyUserInternal(PropertyType::Unknown0x25, reinterpret_cast<u8 *>(&status->property0x25), sizeof(status->property0x25));
     ReceivePropertyUserInternal(PropertyType::Unknown0x26, reinterpret_cast<u8 *>(&status->property0x26), sizeof(status->property0x26));
     ReceivePropertyUserInternal(PropertyType::Unknown0x27, reinterpret_cast<u8 *>(&status->property0x27), sizeof(status->property0x27));
-    ReceivePropertyUserInternal(PropertyType::Unknown0x28, reinterpret_cast<u8 *>(&status->property0x28), sizeof(status->property0x28));
+    ReceivePropertyUserInternal(
+        PropertyType::LastSuccessfulTimestamp, reinterpret_cast<u8 *>(&status->lastSuccessfulTimestamp), sizeof(status->lastSuccessfulTimestamp));
     ReceivePropertyUserInternal(PropertyType::Unknown0x29, reinterpret_cast<u8 *>(&status->property0x29), sizeof(status->property0x29));
     ReceivePropertyUserInternal(PropertyType::Unknown0x2A, reinterpret_cast<u8 *>(&status->property0x2A), sizeof(status->property0x2A));
     ReceivePropertyUserInternal(PropertyType::Unknown0x2B, reinterpret_cast<u8 *>(&status->property0x2B), sizeof(status->property0x2B));
@@ -228,7 +229,8 @@ nn::Result ReceiveUserTaskStatus(TaskStatusInfo *status) {
     ReceivePropertyUserInternal(PropertyType::Unknown0x2E, reinterpret_cast<u8 *>(&status->property0x2E), sizeof(status->property0x2E));
     ReceivePropertyUserInternal(PropertyType::Unknown0x22, reinterpret_cast<u8 *>(&status->property0x22), sizeof(status->property0x22));
     ReceivePropertyUserInternal(PropertyType::Unknown0x24, reinterpret_cast<u8 *>(&status->property0x24), sizeof(status->property0x24));
-    ReceivePropertyUserInternal(PropertyType::Unknown0x2F, reinterpret_cast<u8 *>(status->property0x2F), sizeof(status->property0x2F));
+    ReceivePropertyUserInternal(
+        PropertyType::LastModifiedHeader, reinterpret_cast<u8 *>(status->lastModifiedHeader), sizeof(status->lastModifiedHeader));
     return s_PropertyResult;
 }
 

@@ -14,26 +14,26 @@ nn::Result TaskStatus::GetProperty(PropertyType type, void *buf, u32 size) {
     }
 
     switch (type) {
-        case PropertyType::Unknown0x1D:
+        case PropertyType::StateCode:
             if (size > 1) {
                 size = 1;
             }
 
-            std::memcpy(buf, &statusInfo.property0x1D, size);
+            std::memcpy(buf, &statusInfo.stateCode, size);
             break;
-        case PropertyType::Unknown0x20:
+        case PropertyType::TaskResultCode:
             if (size > 1) {
                 size = 1;
             }
 
-            std::memcpy(buf, &statusInfo.property0x20, size);
+            std::memcpy(buf, &statusInfo.result, size);
             break;
-        case PropertyType::Unknown0x21:
+        case PropertyType::ServiceStatus:
             if (size > 1) {
                 size = 1;
             }
 
-            std::memcpy(buf, &statusInfo.property0x21, size);
+            std::memcpy(buf, &statusInfo.serviceStatus, size);
             break;
         case PropertyType::Unknown0x22:
             if (size > 1) {
@@ -42,12 +42,12 @@ nn::Result TaskStatus::GetProperty(PropertyType type, void *buf, u32 size) {
 
             std::memcpy(buf, &statusInfo.property0x22, size);
             break;
-        case PropertyType::Unknown0x23:
+        case PropertyType::CommErrorCode:
             if (size > 4) {
                 size = 4;
             }
 
-            std::memcpy(buf, &statusInfo.property0x23, size);
+            std::memcpy(buf, &statusInfo.commErrorCode, size);
             break;
         case PropertyType::Unknown0x24:
             if (size > 1) {
@@ -77,12 +77,12 @@ nn::Result TaskStatus::GetProperty(PropertyType type, void *buf, u32 size) {
 
             std::memcpy(buf, &statusInfo.property0x27, size);
             break;
-        case PropertyType::Unknown0x28:
+        case PropertyType::LastSuccessfulTimestamp:
             if (size > 8) {
                 size = 8;
             }
 
-            std::memcpy(buf, &statusInfo.property0x28, size);
+            std::memcpy(buf, &statusInfo.lastSuccessfulTimestamp, size);
             break;
         case PropertyType::Unknown0x29:
             if (size > 8) {
@@ -112,12 +112,12 @@ nn::Result TaskStatus::GetProperty(PropertyType type, void *buf, u32 size) {
 
             std::memcpy(buf, &statusInfo.property0x2C, size);
             break;
-        case PropertyType::Unknown0x2F:
+        case PropertyType::LastModifiedHeader:
             if (size > 0x40) {
                 size = 0x40;
             }
 
-            std::memcpy(buf, statusInfo.property0x2F, size);
+            std::memcpy(buf, statusInfo.lastModifiedHeader, size);
             break;
         default:
             return detail::ChangeBossRetCodeToResult(ResultCode::InvalidPropertyType);

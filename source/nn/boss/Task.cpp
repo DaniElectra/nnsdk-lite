@@ -7,6 +7,7 @@
 #include "nn/boss/TaskOption.h"
 #include "nn/boss/TaskResultCode.h"
 #include "nn/boss/TaskServiceStatus.h"
+#include "nn/boss/TaskStateCode.h"
 #include "nn/boss/boss.h"
 #include "nn/boss/common.h"
 #include "nn/boss/detail/detail.h"
@@ -204,7 +205,7 @@ nn::Result Task::WaitFinish(nn::fnd::TimeSpan &timeout) {
     }
 
     nn::Result res;
-    u8 property0x1D;
+    TaskStateCode stateCode;
     TaskStatus status = {};
 
     do {
@@ -213,12 +214,12 @@ nn::Result Task::WaitFinish(nn::fnd::TimeSpan &timeout) {
             return res;
         }
 
-        status.GetProperty(PropertyType::Unknown0x1D, &property0x1D, sizeof(u8));
-        if (property0x1D == 6 || property0x1D == 7) {
+        status.GetProperty(PropertyType::StateCode, &stateCode, sizeof(u8));
+        if (stateCode == TaskStateCode::Unknown0x06 || stateCode == TaskStateCode::Unknown0x07) {
             return RESULT_SUCCESS;
         }
 
-        if (property0x1D == 5 || property0x1D == 0) {
+        if (stateCode == TaskStateCode::Unknown0x05 || stateCode == TaskStateCode::Unknown0x00) {
             return detail::ChangeBossRetCodeToResult(ResultCode::WaitFinishTaskNotDone);
         }
 
