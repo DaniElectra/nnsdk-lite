@@ -14,18 +14,18 @@ enum class StorageType : u8 {
 
 /**
  * @brief Gets information about the current storage
- * @param unkOut Unknown output parameter
+ * @param size Output storage space reserved
  */
-nn::Result GetStorageInfo(u32 *unkOut);
+nn::Result GetStorageInfo(u32 *size);
 
 /**
  * @brief Registers storage to be used for BOSS
  * @param lowExtDataId Lower part of the Extra Data ID of the title
- * @param unk1 Unknown parameter
- * @param unk2 Unknown parameter
+ * @param size Storage space to reserve
+ * @param entryId Entry ID? Can be up to 0x2000
  * @param storageType Storage type to store the data
  */
-nn::Result RegisterStorage(u32 lowExtDataId, u32 unk1, u16 unk2, StorageType storageType);
+nn::Result RegisterStorage(u32 lowExtDataId, u32 size, u16 entryId, StorageType storageType);
 
 /// Unregisters the current storage being used
 nn::Result UnregisterStorage();

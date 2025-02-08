@@ -29,9 +29,9 @@ public:
 
     /**
      * @brief Gets information about the current storage
-     * @param unkOut Unknown output parameter
+     * @param size Output storage space reserved
      */
-    nn::Result GetStorageInfo(u32 *unkOut);
+    nn::Result GetStorageInfo(u32 *size);
 
     /**
      * @brief Registers a given task
@@ -236,11 +236,11 @@ public:
     /**
      * @brief Registers a storage entry to be used for BOSS
      * @param extDataId Extra Data ID to be used
-     * @param unk1 Unknown parameter
-     * @param unk2 Unknown parameter
+     * @param size Storage space to reserve
+     * @param entryId Entry ID?
      * @param mediaType Media type to store the data
      */
-    nn::Result RegisterStorageEntry(u64 extDataId, u32 unk1, u16 unk2, nn::fs::MediaType mediaType);
+    nn::Result RegisterStorageEntry(u64 extDataId, u32 size, u16 entryId, nn::fs::MediaType mediaType);
 
     /// Unregisters the current storage being used
     nn::Result UnregisterStorage();

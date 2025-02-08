@@ -27,13 +27,13 @@ nn::Result User::InitializeSession(u64 titleId) {
     return res;
 }
 
-nn::Result User::GetStorageInfo(u32 *unkOut) {
+nn::Result User::GetStorageInfo(u32 *size) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 4, 0, 0, 0); // 0x40000
 
     nn::Result res = nn::svc::SendSyncRequest(session);
     if (res) {
-        *unkOut = cmdbuf[2];
+        *size = cmdbuf[2];
         res = RAW_RESULT(cmdbuf[1]);
     }
 
@@ -419,13 +419,13 @@ nn::Result User::GetErrorCode(u32 *errorCode, TaskResultCode result) {
     return res;
 }
 
-nn::Result User::RegisterStorageEntry(u64 extDataId, u32 unk1, u16 unk2, nn::fs::MediaType mediaType) {
+nn::Result User::RegisterStorageEntry(u64 extDataId, u32 size, u16 entryId, nn::fs::MediaType mediaType) {
     u32 *cmdbuf = nn::os::ipc::getThreadCommandBuffer();
     nn::os::ipc::WriteHeader(cmdbuf, 0x2F, 5, 0, 0); // 0x2F0140
     cmdbuf[1] = extDataId;
     cmdbuf[2] = extDataId >> 32;
-    cmdbuf[3] = unk1;
-    cmdbuf[4] = unk2;
+    cmdbuf[3] = size;
+    cmdbuf[4] = entryId;
     cmdbuf[5] = static_cast<u32>(mediaType);
 
     nn::Result res = nn::svc::SendSyncRequest(session);
